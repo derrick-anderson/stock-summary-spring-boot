@@ -67,11 +67,11 @@ public class StockServices {
 
         if(dateSet.length == 3) {
 
-            return repository.dailySummaryQuery(stock_in, dateSet[2], dateSet[1], dateSet[0]);
+            return repository.dailySummaryQuery(stock_in, forcePadding(dateSet[2]), forcePadding(dateSet[1]), forcePadding(dateSet[0]));
         }
         else if( dateSet.length == 2){
 
-            return repository.monthlySummaryQuery(stock_in,dateSet[1], dateSet[0]);
+            return repository.monthlySummaryQuery(stock_in,forcePadding(dateSet[1]), forcePadding(dateSet[0]));
 
         }
         else return null;
@@ -90,7 +90,7 @@ public class StockServices {
 
     }
 
-    public String forcePadding(String element){
+    public static String forcePadding(String element){
         if ( Integer.valueOf(element) < 10){
 
             return "0" + element;
