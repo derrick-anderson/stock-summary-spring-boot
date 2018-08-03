@@ -69,13 +69,13 @@ public class StockServices {
             String year_in = dateSet[0];
             String month_in = forcePadding(dateSet[1]);
             String day_in = forcePadding(dateSet[2]);
-            return repository.dailySummaryQuery(stock_in, year_in, month_in, day_in);
+            return repository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
 
         }
         else if( dateSet.length == 2){
             String year_in = dateSet[0];
             String month_in = forcePadding(dateSet[1]);
-            return repository.monthlySummaryQuery(stock_in, year_in, month_in);
+            return repository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
 
         }
         else return new StockSummary();
