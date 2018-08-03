@@ -1,11 +1,7 @@
 package com.solstice.stocks;
 
-import org.springframework.stereotype.Component;
-
-import javax.persistence.Entity;
 import java.math.BigDecimal;
 
-@Entity
 public class StockSummary {
 
     private String symbol;

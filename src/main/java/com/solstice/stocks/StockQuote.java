@@ -8,13 +8,39 @@ import java.util.GregorianCalendar;
 
 @Entity
 @Table(name="stock_quotes")
-@NamedNativeQuery(
-        query = "SELECT symbol, max(price) as high_price, min(price) as low_price, sum(volume) as volume, "+
-                "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in and month=:month_in and year=:year_in order by date DESC LIMIT 1) as closing_price , "+
-                "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in and month=:month_in and year=:year_in order by date ASC LIMIT 1) as open_price " +
-                "from stock_quotes WHERE symbol=:symbol_in AND day=:day_in and month=:month_in and year=:year_in group by symbol",
-        resultClass = StockSummary.class,
-        name="summaryCall"
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                query = "SELECT symbol, max(price) AS high_price, min(price) AS low_price, sum(volume) AS volume, " +
+                        "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in AND month=:month_in AND year=:year_in ORDER BY date DESC LIMIT 1) AS closing_price , " +
+                        "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in AND month=:month_in AND year=:year_in ORDER BY date ASC LIMIT 1) AS open_price " +
+                        "from stock_quotes WHERE symbol=:symbol_in AND day=:day_in AND month=:month_in AND year=:year_in group by symbol",
+                resultClass = StockSummary.class,
+                name = "StockQuote.dailySummaryQuery",
+                resultSetMapping = "summaryMapper"
+        ),
+        @NamedNativeQuery(
+                query = "SELECT symbol, max(price) AS high_price, min(price) AS low_price, sum(volume) AS volume, " +
+                        "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in  AND month=:month_in AND year=:year_in ORDER BY date DESC LIMIT 1) AS closing_price , " +
+                        "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in  AND month=:month_in AND year=:year_in ORDER BY date ASC LIMIT 1) AS open_price " +
+                        "from stock_quotes WHERE symbol=:symbol_in AND month=:month_in AND year=:year_in group by symbol",
+                resultClass = StockSummary.class,
+                name = "StockQuote.monthlySummaryQuery",
+                resultSetMapping = "summaryMapper"
+        )
+})
+@SqlResultSetMapping(
+    name="summaryMapper",
+    classes = @ConstructorResult(
+        targetClass = StockSummary.class,
+        columns = {
+            @ColumnResult(name="symbol"),
+            @ColumnResult(name = "open_price", type = BigDecimal.class),
+            @ColumnResult(name = "low_price", type = BigDecimal.class),
+            @ColumnResult(name = "high_price", type = BigDecimal.class),
+            @ColumnResult(name = "closing_price", type = BigDecimal.class),
+            @ColumnResult(name = "volume", type=Integer.class)
+        }
+    )
 )
 public class StockQuote {
 
