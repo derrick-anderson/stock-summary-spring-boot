@@ -89,4 +89,17 @@ public class StockServices {
         }
 
     }
+
+    public String forcePadding(String element){
+        if ( Integer.valueOf(element) < 10){
+
+            return "0" + element;
+
+        }
+        else{
+
+            return element;
+
+        }
+    }
 }
