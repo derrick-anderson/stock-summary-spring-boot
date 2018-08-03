@@ -66,15 +66,19 @@ public class StockServices {
         String[] dateSet = date_in.split("-");
 
         if(dateSet.length == 3) {
+            String year_in = dateSet[0];
+            String month_in = forcePadding(dateSet[1]);
+            String day_in = forcePadding(dateSet[2]);
+            return repository.dailySummaryQuery(stock_in, year_in, month_in, day_in);
 
-            return repository.dailySummaryQuery(stock_in, forcePadding(dateSet[2]), forcePadding(dateSet[1]), forcePadding(dateSet[0]));
         }
         else if( dateSet.length == 2){
-
-            return repository.monthlySummaryQuery(stock_in,forcePadding(dateSet[1]), forcePadding(dateSet[0]));
+            String year_in = dateSet[0];
+            String month_in = forcePadding(dateSet[1]);
+            return repository.monthlySummaryQuery(stock_in, year_in, month_in);
 
         }
-        else return null;
+        else return new StockSummary();
     }
 
 
@@ -91,7 +95,7 @@ public class StockServices {
     }
 
     public static String forcePadding(String element){
-        if ( Integer.valueOf(element) < 10){
+        if ( element.length() == 1){
 
             return "0" + element;
 
