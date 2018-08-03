@@ -42,6 +42,17 @@ public class StockServices {
         }
     }
 
+    public StockSummary getSummary(String stock_in, String date_in){
+        String[] dateSet = date_in.split("-");
+        if(dateSet.length == 3){
+            return repository.dailySummaryQuery(stock_in,dateSet[2], dateSet[1], dateSet[0]);
+        }
+        else if( dateSet.length == 2){
+            return repository.monthlySummaryQuery(stock_in,dateSet[1], dateSet[0]);
+        }
+        else return null;
+    }
+
     public String printSummary(StockSummary summary){
         try{
             return mapper.writeValueAsString(summary);

@@ -1,8 +1,11 @@
 package com.solstice.stocks;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.nio.file.Path;
 
 @RestController("/")
 public class StockSummaryController {
@@ -23,11 +26,19 @@ public class StockSummaryController {
 
     @PostMapping("/load")
     public void load_data(){
+
         stockServices.loadStocks();
     }
 
+
     @GetMapping("/summary")
-    public String getsummary(){
+    public String testgetsummary(){
+
         return stockServices.printSummary(repository.dailySummaryQuery("AAPL", "22","06", "2018"));
+    }
+
+    @GetMapping("/{STOCK}/{DATE}")
+    public String getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){
+        return stockServices.printSummary(stockServices.getSummary(stock_in, date_in));
     }
 }
