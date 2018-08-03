@@ -28,6 +28,6 @@ public class StockSummaryController {
 
     @GetMapping("/summary")
     public String getsummary(){
-        return stockServices.printSummary(repository.getSummaryByDay("AAPL", "22","06", "2018"));
+        return stockServices.printSummary(repository.dailySummaryQuery("AAPL", "22","06", "2018"));
     }
 }
