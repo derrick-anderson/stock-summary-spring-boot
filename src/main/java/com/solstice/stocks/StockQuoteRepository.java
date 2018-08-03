@@ -12,10 +12,10 @@ public interface StockQuoteRepository extends CrudRepository<StockQuote, Long> {
     List<StockQuote> findAllBySymbol(String symbol);
 
     @Query(nativeQuery = true)
-    StockSummary dailySummaryQuery(@Param("symbol_in") String symbol_in, @Param("year_in") String year_in,
-                                   @Param("month_in") String month_in, @Param("day_in") String day_in);
+    StockSummary dailySummaryQuery(@Param("symbol_in") String symbol_in, @Param("year_in") int year_in,
+                                   @Param("month_in") int month_in, @Param("day_in") int day_in);
 
     @Query(nativeQuery = true)
     StockSummary monthlySummaryQuery(@Param("symbol_in") String symbol_in,
-                                    @Param("year_in") String year_in, @Param("month_in") String month_in);
+                                    @Param("year_in") int year_in, @Param("month_in") int month_in);
 }
