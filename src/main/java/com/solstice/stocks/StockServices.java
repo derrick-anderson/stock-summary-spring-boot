@@ -19,7 +19,6 @@ public class StockServices {
 
     public List<StockQuote> getAllStocks(){
 
-
         List<StockQuote> stock_list = null;
         try {
             stock_list = mapper.readValue(new URL("https://bootcamp-training-files.cfapps.io/week2/week2-stocks.json"), new TypeReference<List<StockQuote>>() {
@@ -30,9 +29,11 @@ public class StockServices {
         return stock_list;
     }
 
+
     public void loadStocks(){
         repository.saveAll(getAllStocks());
     }
+
 
     public String printStocks(List<StockQuote> stockQuotes) {
         try {
@@ -41,6 +42,7 @@ public class StockServices {
             return "ISSUE";
         }
     }
+
 
     public StockSummary getSummary(String stock_in, String date_in){
         String[] dateSet = date_in.split("-");
@@ -52,6 +54,7 @@ public class StockServices {
         }
         else return null;
     }
+
 
     public String printSummary(StockSummary summary){
         try{
