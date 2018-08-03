@@ -16,12 +16,14 @@ public class StockSummary {
     }
 
     public StockSummary(String symbol, BigDecimal open_price, BigDecimal low_price, BigDecimal high_price, BigDecimal closing_price, Integer volume) {
+
         this.symbol = symbol;
         this.open_price = open_price;
         this.low_price = low_price;
         this.high_price = high_price;
         this.closing_price = closing_price;
         this.volume = volume;
+
     }
 
     public String getSymbol() {
@@ -72,23 +74,4 @@ public class StockSummary {
         this.volume = volume;
     }
 
-    //todo: Add a new Summary format to this
-    public String summary(int option){
-        /*System.out.println("Stock : " + this.symbol);
-        System.out.println("Volume : " + this.volume);
-        System.out.println("Opening Price : " + this.open_price);
-        System.out.println("Low Price : " + this.low_price);
-        System.out.println("High Price : " + this.high_price);
-        System.out.println("Closing Price : " + this.closing_price);
-        System.out.println("TESTING");*/
-        if(option == 1){
-            System.out.println("Daily Summary for Stock : " + this.symbol);
-        }else if(option ==2) {
-            System.out.println("Monthly Summary for Stock : " + this.symbol);
-        }
-        System.out.println(String.format("%60s", "").replace(" ", "-"));
-        System.out.println(String.format("|%-10s|%-15s|%-10s|%-10s|%-15s|", "Volume", "Opening Price", "Low Price", "High Price", "Closing Price"));
-        System.out.println(String.format("|%,-10d|%,-15.2f|%,-10.2f|%,-10.2f|%,-15.2f|", this.volume, this.open_price, this.low_price, this.high_price, this.closing_price));
-        return "";
-    }
 }
