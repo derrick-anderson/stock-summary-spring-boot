@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 @Table(name="stock_quotes")
 @NamedNativeQueries({
         @NamedNativeQuery(
+
                 query = "SELECT symbol, max(price) AS high_price, min(price) AS low_price, sum(volume) AS volume, " +
                         "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in AND month=:month_in AND year=:year_in ORDER BY date DESC LIMIT 1) AS closing_price , " +
                         "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in AND day=:day_in AND month=:month_in AND year=:year_in ORDER BY date ASC LIMIT 1) AS open_price " +
@@ -17,8 +18,10 @@ import java.util.GregorianCalendar;
                 resultClass = StockSummary.class,
                 name = "StockQuote.dailySummaryQuery",
                 resultSetMapping = "summaryMapper"
+
         ),
         @NamedNativeQuery(
+
                 query = "SELECT symbol, max(price) AS high_price, min(price) AS low_price, sum(volume) AS volume, " +
                         "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in  AND month=:month_in AND year=:year_in ORDER BY date DESC LIMIT 1) AS closing_price , " +
                         "(SELECT price FROM stock_quotes WHERE symbol = :symbol_in  AND month=:month_in AND year=:year_in ORDER BY date ASC LIMIT 1) AS open_price " +
@@ -26,13 +29,18 @@ import java.util.GregorianCalendar;
                 resultClass = StockSummary.class,
                 name = "StockQuote.monthlySummaryQuery",
                 resultSetMapping = "summaryMapper"
+
         )
 })
 @SqlResultSetMapping(
+
     name="summaryMapper",
     classes = @ConstructorResult(
+
         targetClass = StockSummary.class,
+
         columns = {
+
             @ColumnResult(name="symbol"),
             @ColumnResult(name = "open_price", type = BigDecimal.class),
             @ColumnResult(name = "low_price", type = BigDecimal.class),
@@ -97,10 +105,7 @@ public class StockQuote {
         this.volume = volume;
     }
 
-    public Date getDate() {
-        return date;
-
-    }
+    public Date getDate() {  return date;  }
 
     public String getYear() {
         return year;
@@ -128,20 +133,37 @@ public class StockQuote {
 
     //Adds custom date method writer
     public void setDate(Date date) {
+
         this.date = date;
+
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
+
         this.year = String.valueOf(calendar.get(Calendar.YEAR));
+
         int thisMonth = calendar.get(Calendar.MONTH)+1;
+
         if (thisMonth < 10) {
+
             this.month =  "0" + thisMonth;
-        }else{
-            this.month = String.valueOf(thisMonth); }
+        }
+        else{
+
+            this.month = String.valueOf(thisMonth);
+
+        }
+
         int thisDay = calendar.get(Calendar.DAY_OF_MONTH);
+
         if (thisDay < 10){
+
             this.day = "0" + thisDay;
-        }else{
+
+        }
+        else{
+
             this.day = String.valueOf(thisDay);
+
         }
 
     }
