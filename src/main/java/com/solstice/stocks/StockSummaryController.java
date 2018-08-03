@@ -31,10 +31,10 @@ public class StockSummaryController {
     }
 
 
-    @GetMapping("/summary")
-    public String testgetsummary(){
-
-        return stockServices.printSummary(repository.dailySummaryQuery("AAPL", "22","06", "2018"));
+    @GetMapping("/{STOCK}/getall")
+    public String getAllStocks(@PathVariable("STOCK") String symbol){
+        return stockServices.printStocks(repository.findAllBySymbol(symbol));
+        //return stockServices.print(repository.dailySummaryQuery("AAPL", "22","06", "2018"));
     }
 
     @GetMapping("/{STOCK}/{DATE}")
