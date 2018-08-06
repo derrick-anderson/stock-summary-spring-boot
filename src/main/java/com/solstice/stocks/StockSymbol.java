@@ -1,11 +1,9 @@
 package com.solstice.stocks;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "stock_symbol")
+@Table(name = "stock_symbols")
 public class StockSymbol {
 
     @Id
@@ -19,7 +17,7 @@ public class StockSymbol {
     private String name;
 
     //todo: Update this to use a Text Column IF NECESSARY!
-    @Column(name = "Company Description")
+    @Column(name = "company_description")
     private String desc;
 
     public StockSymbol() {
