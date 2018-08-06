@@ -1,6 +1,7 @@
 package com.solstice.stocks.model;
 
 import com.solstice.stocks.model.StockQuote;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +19,8 @@ public class StockSymbol {
     private String symbol;
 
     @OneToMany()
-    @JoinColumn(name = "stock_quotes_id")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "stock_symbol_id")
     private List<StockQuote> stockQuotes;
 
     public StockSymbol(String symbol, List<StockQuote> stockQuotes) {

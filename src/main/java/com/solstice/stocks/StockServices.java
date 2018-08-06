@@ -3,6 +3,7 @@ package com.solstice.stocks;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.solstice.stocks.data.StockQuoteRepository;
+import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
 import com.solstice.stocks.model.StockSymbol;
@@ -20,10 +21,11 @@ import static java.util.stream.Collectors.groupingBy;
 @Component
 public class StockServices {
 
-    private StockQuoteRepository repository;
+    //private StockQuoteRepository repository;
+    private StockSymbolRepository repository;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public StockServices(StockQuoteRepository repository) {
+    public StockServices(StockSymbolRepository repository) {
 
         this.repository = repository;
 
@@ -64,12 +66,9 @@ public class StockServices {
 
     public void loadStocks(){
 
-        String thisThing = getGroupedSymbols(getAllStocks()).toString();
-
-        repository.saveAll(getAllStocks());
+        repository.saveAll(getGroupedSymbols(getAllStocks()));
 
     }
-
 
     public String printStocks(List<StockQuote> stockQuotes) {
 
@@ -95,15 +94,16 @@ public class StockServices {
             int year_in = Integer.valueOf(dateSet[0]);
             int month_in = Integer.valueOf(dateSet[1]);
             int day_in = Integer.valueOf(dateSet[2]);
-            return repository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
+            //return repository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
+            return null;
 
         }
         else if( dateSet.length == 2){
 
             int year_in = Integer.valueOf(dateSet[0]);
             int month_in = Integer.valueOf(dateSet[1]);
-            return repository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
-
+            //return repository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
+            return null;
         }
         else return new StockSummary();
     }

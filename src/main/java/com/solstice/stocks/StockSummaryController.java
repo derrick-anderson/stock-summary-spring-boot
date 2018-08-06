@@ -33,13 +33,13 @@ public class StockSummaryController {
 
     }
 
-
+    /*
     @GetMapping("/{STOCK}/getall")
     public String getAllStocks(@PathVariable("STOCK") String symbol){
 
         return stockServices.printStocks(repository.findAllBySymbol(symbol));
 
-    }
+    }*/
 
     @GetMapping("/{STOCK}/{DATE}")
     public String getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){

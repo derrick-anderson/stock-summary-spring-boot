@@ -12,7 +12,7 @@ import java.util.List;
 public interface StockQuoteRepository extends CrudRepository<StockQuote, Long> {
 
 
-    List<StockQuote> findAllBySymbol(String symbol);
+    //List<StockQuote> findAllBySymbol(String symbol);
 
     @Query(nativeQuery = true)
     StockSummary dailySummaryQuery(@Param("symbol_in") String symbol_in, @Param("year_in") int year_in,

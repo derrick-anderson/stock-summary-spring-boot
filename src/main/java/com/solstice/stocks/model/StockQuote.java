@@ -56,6 +56,7 @@ public class StockQuote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Transient
     private String symbol;
     private BigDecimal price;
     private int volume;
@@ -65,9 +66,8 @@ public class StockQuote {
     private int day;
 
     @ManyToOne
-    @JoinColumn(name = "stock_symbols_id")
+    @JoinColumn(name = "stock_symbol_id")
     private StockSymbol stockSymbol;
-
 
     public StockQuote() {
     }
