@@ -1,6 +1,7 @@
-package com.solstice.stocks;
+package com.solstice.stocks.service;
 
 import com.solstice.stocks.data.StockSymbolRepository;
+import com.solstice.stocks.service.StockServices;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
