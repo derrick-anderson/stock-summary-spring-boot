@@ -1,4 +1,4 @@
-package com.solstice.stocks;
+package com.solstice.stocks.model;
 
 import java.math.BigDecimal;
 
