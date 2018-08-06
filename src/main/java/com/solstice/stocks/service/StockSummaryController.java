@@ -1,7 +1,5 @@
 package com.solstice.stocks.service;
 
-import com.solstice.stocks.data.StockSymbolRepository;
-import com.solstice.stocks.service.StockServices;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/")
 public class StockSummaryController {
 
-    private StockSymbolRepository symbolRepository;
     private StockServices stockServices;
 
-    public StockSummaryController(StockSymbolRepository symbolRepository, StockServices stockServices) {
+    public StockSummaryController(StockServices stockServices) {
 
-        this.symbolRepository = symbolRepository;
         this.stockServices = stockServices;
 
     }
