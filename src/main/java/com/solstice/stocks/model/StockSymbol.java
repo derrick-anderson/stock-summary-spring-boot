@@ -1,12 +1,10 @@
 package com.solstice.stocks.model;
 
-import com.solstice.stocks.model.StockQuote;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @NamedNativeQueries({
         @NamedNativeQuery(
@@ -87,4 +85,11 @@ public class StockSymbol {
         this.symbol = symbol;
     }
 
+    public List<StockQuote> getStockQuotes() {
+        return stockQuotes;
+    }
+
+    public void setStockQuotes(List<StockQuote> stockQuotes) {
+        this.stockQuotes = stockQuotes;
+    }
 }
