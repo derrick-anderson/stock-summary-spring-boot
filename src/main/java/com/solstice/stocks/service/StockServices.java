@@ -91,16 +91,4 @@ public class StockServices {
         else return new StockSummary();
     }
 
-
-    public String printSummary(StockSummary summary){
-
-        try{
-            return mapper.writeValueAsString(summary);
-        }
-        catch (Exception e){
-            System.err.println(e.getMessage());
-            return null;
-        }
-
-    }
 }

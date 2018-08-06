@@ -1,9 +1,7 @@
 package com.solstice.stocks.service;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.solstice.stocks.model.StockSummary;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/")
 public class StockSummaryController {
@@ -31,9 +29,9 @@ public class StockSummaryController {
     }
 
     @GetMapping("/{STOCK}/{DATE}")
-    public String getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){
+    public StockSummary getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){
 
-        return stockServices.printSummary(stockServices.getSummary(stock_in, date_in));
+        return stockServices.getSummary(stock_in, date_in);
 
     }
 }
