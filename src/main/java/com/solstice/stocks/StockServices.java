@@ -22,12 +22,14 @@ import static java.util.stream.Collectors.groupingBy;
 public class StockServices {
 
     //private StockQuoteRepository repository;
-    private StockSymbolRepository repository;
+    private StockSymbolRepository symbolRepository;
+    private StockQuoteRepository stockRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public StockServices(StockSymbolRepository repository) {
+    public StockServices(StockSymbolRepository repository, StockQuoteRepository stockRepository) {
 
-        this.repository = repository;
+        this.symbolRepository = repository;
+        this.stockRepository = stockRepository;
 
     }
 
@@ -66,7 +68,7 @@ public class StockServices {
 
     public void loadStocks(){
 
-        repository.saveAll(getGroupedSymbols(getAllStocks()));
+        symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
 
     }
 
@@ -94,16 +96,14 @@ public class StockServices {
             int year_in = Integer.valueOf(dateSet[0]);
             int month_in = Integer.valueOf(dateSet[1]);
             int day_in = Integer.valueOf(dateSet[2]);
-            //return repository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
-            return null;
+            return symbolRepository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
 
         }
         else if( dateSet.length == 2){
 
             int year_in = Integer.valueOf(dateSet[0]);
             int month_in = Integer.valueOf(dateSet[1]);
-            //return repository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
-            return null;
+            return symbolRepository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
         }
         else return new StockSummary();
     }
