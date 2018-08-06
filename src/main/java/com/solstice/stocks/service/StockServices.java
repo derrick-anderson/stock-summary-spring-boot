@@ -49,14 +49,16 @@ public class StockServices {
 
 
     public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes){
+
         Set<StockSymbol> groupedSymbols = new HashSet<>();
 
-        Map<String, List<StockQuote> > allQuotesGrouped = allQuotes.stream()
-                .collect(groupingBy(StockQuote::getSymbol));
+        Map<String, List<StockQuote> > allQuotesGrouped = allQuotes.stream().collect(groupingBy(StockQuote::getSymbol));
 
         for( String symbol : allQuotesGrouped.keySet()){
+
             StockSymbol entry = new StockSymbol(symbol, allQuotesGrouped.get(symbol));
             groupedSymbols.add(entry);
+
         }
 
         return groupedSymbols;
@@ -67,21 +69,6 @@ public class StockServices {
         symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
 
     }
-
-    public String printStocks(List<StockQuote> stockQuotes) {
-
-        try {
-
-            return mapper.writeValueAsString(stockQuotes);
-
-        }
-        catch (Exception e) {
-
-            return "ISSUE";
-
-        }
-    }
-
 
     public StockSummary getSummary(String stock_in, String date_in){
 
