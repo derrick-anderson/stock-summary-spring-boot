@@ -20,6 +20,10 @@ public class StockSymbol {
     @Column(name = "company_description")
     private String desc;
 
+    @ManyToOne()
+    @JoinColumn(name = "stock_quotes_id")
+    private StockQuote stockQuote;
+
     public StockSymbol() {
     }
 
