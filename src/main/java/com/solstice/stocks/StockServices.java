@@ -2,10 +2,19 @@ package com.solstice.stocks;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.solstice.stocks.data.StockQuoteRepository;
+import com.solstice.stocks.model.StockQuote;
+import com.solstice.stocks.model.StockSummary;
+import com.solstice.stocks.model.StockSymbol;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.groupingBy;
 
 
 @Component
@@ -39,7 +48,23 @@ public class StockServices {
     }
 
 
+    public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes){
+        Set<StockSymbol> groupedSymbols = new HashSet<>();
+
+        Map<String, List<StockQuote> > allQuotesGrouped = allQuotes.stream()
+                .collect(groupingBy(StockQuote::getSymbol));
+
+        for( String symbol : allQuotesGrouped.keySet()){
+            StockSymbol entry = new StockSymbol(symbol, allQuotesGrouped.get(symbol));
+            groupedSymbols.add(entry);
+        }
+
+        return groupedSymbols;
+    }
+
     public void loadStocks(){
+
+        String thisThing = getGroupedSymbols(getAllStocks()).toString();
 
         repository.saveAll(getAllStocks());
 

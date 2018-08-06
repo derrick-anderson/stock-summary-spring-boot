@@ -1,4 +1,4 @@
-package com.solstice.stocks;
+package com.solstice.stocks.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -63,6 +63,11 @@ public class StockQuote {
     private int year;
     private int month;
     private int day;
+
+    @ManyToOne
+    @JoinColumn(name = "stock_symbols_id")
+    private StockSymbol stockSymbol;
+
 
     public StockQuote() {
     }
