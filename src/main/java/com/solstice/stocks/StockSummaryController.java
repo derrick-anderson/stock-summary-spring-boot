@@ -1,6 +1,6 @@
 package com.solstice.stocks;
 
-import com.solstice.stocks.data.StockQuoteRepository;
+import com.solstice.stocks.data.StockSymbolRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/")
 public class StockSummaryController {
 
-    private StockQuoteRepository repository;
+    private StockSymbolRepository symbolRepository;
     private StockServices stockServices;
 
-    public StockSummaryController(StockQuoteRepository repository, StockServices stockServices) {
+    public StockSummaryController(StockSymbolRepository symbolRepository, StockServices stockServices) {
 
-        this.repository = repository;
+        this.symbolRepository = symbolRepository;
         this.stockServices = stockServices;
 
     }
@@ -32,14 +32,6 @@ public class StockSummaryController {
         stockServices.loadStocks();
 
     }
-
-    /*
-    @GetMapping("/{STOCK}/getall")
-    public String getAllStocks(@PathVariable("STOCK") String symbol){
-
-        return stockServices.printStocks(repository.findAllBySymbol(symbol));
-
-    }*/
 
     @GetMapping("/{STOCK}/{DATE}")
     public String getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){

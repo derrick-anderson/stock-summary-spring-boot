@@ -2,7 +2,6 @@ package com.solstice.stocks;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
@@ -21,15 +20,12 @@ import static java.util.stream.Collectors.groupingBy;
 @Component
 public class StockServices {
 
-    //private StockQuoteRepository repository;
     private StockSymbolRepository symbolRepository;
-    private StockQuoteRepository stockRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public StockServices(StockSymbolRepository repository, StockQuoteRepository stockRepository) {
+    public StockServices(StockSymbolRepository repository) {
 
         this.symbolRepository = repository;
-        this.stockRepository = stockRepository;
 
     }
 
