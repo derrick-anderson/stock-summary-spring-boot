@@ -12,7 +12,7 @@ import java.util.List;
                 query = "SELECT symbol, max(q.price) AS high_price, min(q.price) AS low_price, sum(q.volume) AS volume, " +
                         "(SELECT q.price FROM stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol = :symbol_in AND q.day=:day_in AND q.month=:month_in AND q.year=:year_in ORDER BY q.date DESC LIMIT 1) AS closing_price , " +
                         "(SELECT q.price FROM stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol = :symbol_in AND q.day=:day_in AND q.month=:month_in AND q.year=:year_in ORDER BY q.date ASC LIMIT 1) AS open_price " +
-                        "from stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol=:symbol_in AND q.day=:day_in AND q.month=:month_in AND q.year=:year_in group by symbol",
+                        "from stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbols.id WHERE symbol=:symbol_in AND q.day=:day_in AND q.month=:month_in AND q.year=:year_in group by symbol",
                 resultClass = StockSummary.class,
                 name = "StockSymbol.dailySummaryQuery",
                 resultSetMapping = "summaryMapper"
@@ -23,7 +23,7 @@ import java.util.List;
                 query = "SELECT symbol, max(q.price) AS high_price, min(q.price) AS low_price, sum(q.volume) AS volume, " +
                         "(SELECT q.price FROM stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol = :symbol_in AND q.month=:month_in AND q.year=:year_in ORDER BY q.date DESC LIMIT 1) AS closing_price , " +
                         "(SELECT q.price FROM stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol = :symbol_in AND q.month=:month_in AND q.year=:year_in ORDER BY q.date ASC LIMIT 1) AS open_price " +
-                        "from stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbol_id WHERE symbol=:symbol_in AND q.month=:month_in AND q.year=:year_in group by symbol",
+                        "from stock_symbols JOIN stock_quotes q ON q.stock_symbol_id = stock_symbols.id WHERE symbol=:symbol_in AND q.month=:month_in AND q.year=:year_in group by symbol",
                 resultClass = StockSummary.class,
                 name = "StockSymbol.monthlySummaryQuery",
                 resultSetMapping = "summaryMapper"
