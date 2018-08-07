@@ -37,11 +37,11 @@ public class StockServices {
 
     public List<StockQuote> getAllStocks(){
 
-        List<StockQuote> stock_list = null;
+        List<StockQuote> stockList = null;
 
         try {
 
-            stock_list = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
+            stockList = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
             });
 
         }
@@ -50,7 +50,7 @@ public class StockServices {
             System.err.println(e.getMessage());
 
         }
-        return stock_list;
+        return stockList;
     }
 
 
@@ -76,23 +76,23 @@ public class StockServices {
 
     }
 
-    public StockSummary getSummary(String stock_in, String date_in){
+    public StockSummary getSummary(String stockIn, String dateIn){
 
-        String[] dateSet = date_in.split("-");
+        String[] dateSet = dateIn.split("-");
 
         if(dateSet.length == 3) {
 
-            int year_in = Integer.valueOf(dateSet[0]);
-            int month_in = Integer.valueOf(dateSet[1]);
-            int day_in = Integer.valueOf(dateSet[2]);
-            return symbolRepository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
+            int yearIn = Integer.valueOf(dateSet[0]);
+            int monthIn = Integer.valueOf(dateSet[1]);
+            int dayIn = Integer.valueOf(dateSet[2]);
+            return symbolRepository.dailySummaryQuery(stockIn.toUpperCase(), yearIn, monthIn, dayIn);
 
         }
         else if( dateSet.length == 2){
 
-            int year_in = Integer.valueOf(dateSet[0]);
-            int month_in = Integer.valueOf(dateSet[1]);
-            return symbolRepository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
+            int yearIn = Integer.valueOf(dateSet[0]);
+            int monthIn = Integer.valueOf(dateSet[1]);
+            return symbolRepository.monthlySummaryQuery(stockIn.toUpperCase(), yearIn, monthIn);
         }
         else return new StockSummary();
     }
