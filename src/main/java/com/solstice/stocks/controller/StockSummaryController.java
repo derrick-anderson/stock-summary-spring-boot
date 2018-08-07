@@ -30,9 +30,9 @@ public class StockSummaryController {
     }
 
     @GetMapping("/{STOCK}/{DATE}")
-    public StockSummary getSummary(@PathVariable("STOCK") String stock_in, @PathVariable("DATE") String date_in){
+    public StockSummary getSummary(@PathVariable("STOCK") String stockIn, @PathVariable("DATE") String dateIn){
 
-        return stockServices.getSummary(stock_in, date_in);
+        return stockServices.getSummary(stockIn, dateIn);
 
     }
 }
