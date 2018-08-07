@@ -6,6 +6,8 @@ import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
 import com.solstice.stocks.model.StockSymbol;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -18,10 +20,14 @@ import static java.util.stream.Collectors.groupingBy;
 
 
 @Component
+@PropertySource("classpath:application.properties")
 public class StockServices {
 
     private StockSymbolRepository symbolRepository;
     private ObjectMapper mapper = new ObjectMapper();
+
+    @Value("${datasource.url}")
+    private URL dataUrl;
 
     public StockServices(StockSymbolRepository repository) {
 
@@ -35,7 +41,7 @@ public class StockServices {
 
         try {
 
-            stock_list = mapper.readValue(new URL("https://bootcamp-training-files.cfapps.io/week2/week2-stocks.json"), new TypeReference<List<StockQuote>>() {
+            stock_list = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
             });
 
         }
