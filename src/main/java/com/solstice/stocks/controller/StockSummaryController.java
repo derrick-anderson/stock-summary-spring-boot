@@ -23,7 +23,7 @@ public class StockSummaryController {
     }
 
     @PostMapping("/load")
-    public void load_data(){
+    public void loadData(){
 
         stockServices.loadStocks();
 
