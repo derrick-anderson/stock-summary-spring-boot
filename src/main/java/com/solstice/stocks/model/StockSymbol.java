@@ -48,7 +48,6 @@ import java.util.List;
         )
 )
 
-
 @Entity
 @Table(name = "stock_symbols")
 public class StockSymbol {
