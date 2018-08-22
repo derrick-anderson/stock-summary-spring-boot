@@ -130,7 +130,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
+    public BigDecimal getLowPrice(String symbol, String dateIn){
         //todo: Create Implementation
         return null;
     }
