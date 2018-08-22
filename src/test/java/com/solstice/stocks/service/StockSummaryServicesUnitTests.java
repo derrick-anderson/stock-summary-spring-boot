@@ -43,6 +43,15 @@ public class StockSummaryServicesUnitTests {
 
     }
 
+    //Mock Objects for Assertions
+    StockQuote highQuote = new StockQuote(
+            "AAPL",
+            new BigDecimal(1500),
+            180000,
+            new Date()
+            );
+
+
 
     @Test
     public void testDailySummaryReturn(){
@@ -126,13 +135,13 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testGetHighPriceForDate(){
-        StockQuote aQuote = new StockQuote();
-        aQuote.setSymbol("AAPL");
-        aQuote.setPrice(new BigDecimal(1500));
-        aQuote.setVolume(150000);
-        aQuote.setDate(new Date());
+//        StockQuote aQuote = new StockQuote();
+//        aQuote.setSymbol("AAPL");
+//        aQuote.setPrice(new BigDecimal(1500));
+//        aQuote.setVolume(150000);
+//        aQuote.setDate(new Date());
 
-        when(stockQuoteRepository.getHighPriceForDate(any(), any(), any())).thenReturn(aQuote);
+        when(stockQuoteRepository.getHighPriceForDate(any(), any(), any())).thenReturn(highQuote);
 
         BigDecimal highPrice = stockServices.getHighPrice("AAPL", "2018-06-22");
 
@@ -160,4 +169,14 @@ public class StockSummaryServicesUnitTests {
 
         assertEquals(new BigDecimal(1200), lowPrice);
     }
+
+
+    @Test
+    public void testGetOpenPriceForDate(){
+
+    }
+
+
+    //todo: Write Test for get closing price
+
 }
