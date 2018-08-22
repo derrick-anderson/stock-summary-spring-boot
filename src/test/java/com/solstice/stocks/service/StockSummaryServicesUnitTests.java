@@ -44,19 +44,22 @@ public class StockSummaryServicesUnitTests {
     }
 
     //Mock Objects for Assertions
-    StockQuote highQuote = new StockQuote(
+    private StockQuote highQuote = new StockQuote(
             "AAPL",
             new BigDecimal(1500),
             180000,
             new Date()
             );
-    StockQuote lowQuote = new StockQuote(
+    private StockQuote lowQuote = new StockQuote(
             "AAPL",
             new BigDecimal(1200),
             150000,
             new Date()
             );
-
+    private List<StockQuote> quoteList = new ArrayList<StockQuote>(){{
+        add(highQuote);
+        add(lowQuote);
+    }};
 
 
     @Test
@@ -110,21 +113,6 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testGetTotalVolumeForDate(){
-
-        List<StockQuote> quoteList = new ArrayList<StockQuote>();
-        StockQuote quote1 = new StockQuote();
-        quote1.setSymbol("AAPL");
-        quote1.setPrice(new BigDecimal(1500));
-        quote1.setVolume(150000);
-        quote1.setDate(new Date());
-        quoteList.add(quote1);
-
-        StockQuote quote2 = new StockQuote();
-        quote2.setSymbol("AAPL");
-        quote2.setPrice(new BigDecimal(1200));
-        quote2.setVolume(180000);
-        quote2.setDate(new Date());
-        quoteList.add(quote2);
 
         when(stockQuoteRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
 
