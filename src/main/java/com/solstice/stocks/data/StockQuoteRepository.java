@@ -12,7 +12,8 @@ import java.util.List;
 public interface StockQuoteRepository extends JpaRepository<StockQuote, Long> {
 
     //todo: Implement Query
-    @Query("SELECT s FROM StockQuote s JOIN s.stockSymbol t WHERE t.symbol= :symbolIn AND FUNCTION('DATE_FORMAT', s.date, :dateFormat) = :dateIn")
+    @Query("SELECT s FROM StockQuote s JOIN s.stockSymbol t WHERE t.symbol= :symbolIn " +
+            "AND FUNCTION('DATE_FORMAT', s.date, :dateFormat) = :dateIn")
     List<StockQuote> getTotalVolumeForDate(@Param("symbolIn") String symbol,
                                            @Param("dateIn") String dateIn,
                                            @Param("dateFormat") String dateFormat);
