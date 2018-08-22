@@ -50,6 +50,12 @@ public class StockSummaryServicesUnitTests {
             150000,
             new Date()
             );
+    private StockQuote openQuote = new StockQuote(
+            "AAPL",
+            new BigDecimal(100.00),
+            100000,
+            new Date()
+            );
     private List<StockQuote> quoteList = new ArrayList<StockQuote>(){{
         add(highQuote);
         add(lowQuote);
@@ -160,6 +166,11 @@ public class StockSummaryServicesUnitTests {
     @Test
     public void testGetOpenPriceForDate(){
 
+        when(stockQuoteRepository.getOpenPriceForDate(any(), any(), any())).thenReturn(openQuote);
+
+        BigDecimal openPrice = stockServices.getOpenPrice("AAPL", "2018-06-22");
+
+        assertEquals(new BigDecimal(100.00), openPrice);
     }
 
 
