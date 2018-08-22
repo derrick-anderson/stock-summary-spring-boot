@@ -30,10 +30,12 @@ public class StockServices {
     @Value("${datasource.url}")
     private URL dataUrl;
 
+
     public StockServices(StockSymbolRepository symbolRepository, StockQuoteRepository stockQuoteRepository) {
         this.symbolRepository = symbolRepository;
         this.stockQuoteRepository = stockQuoteRepository;
     }
+
 
     public List<StockQuote> getAllStocks(){
 
@@ -70,11 +72,24 @@ public class StockServices {
         return groupedSymbols;
     }
 
+
     public void loadStocks(){
 
         symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
 
     }
+
+
+    private String getDateFormat(String dateIn) {
+        String[] dateParts = dateIn.split("-");
+
+        String dateFormat = "%Y-%m";
+        if (dateParts.length == 3) {
+            dateFormat = "%Y-%m-%d";
+        }
+        return dateFormat;
+    }
+
 
     public StockSummary getSummary(String stockIn, String dateIn){
 
@@ -110,16 +125,6 @@ public class StockServices {
                 .collect(Collectors.summingInt(StockQuote::getVolume));
 
         return totalVolume;
-    }
-
-    private String getDateFormat(String dateIn) {
-        String[] dateParts = dateIn.split("-");
-
-        String dateFormat = "%Y-%m";
-        if (dateParts.length == 3) {
-            dateFormat = "%Y-%m-%d";
-        }
-        return dateFormat;
     }
 
 
