@@ -180,7 +180,6 @@ public class StockSummaryServicesUnitTests {
     }
 
 
-    //todo: Write Test for get closing price
     @Test
     public void testGetClosePriceForDate(){
 
