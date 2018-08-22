@@ -112,7 +112,13 @@ public class StockQuote {
 
     }
 
+    public StockSymbol getStockSymbol() {
+        return stockSymbol;
+    }
 
+    public void setStockSymbol(StockSymbol stockSymbol) {
+        this.stockSymbol = stockSymbol;
+    }
 }
 
 

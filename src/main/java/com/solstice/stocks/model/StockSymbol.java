@@ -63,6 +63,9 @@ public class StockSymbol {
     @JoinColumn(name = "stock_symbol_id")
     private List<StockQuote> stockQuotes;
 
+    public StockSymbol() {
+    }
+
     public StockSymbol(String symbol, List<StockQuote> stockQuotes) {
         this.symbol = symbol;
         this.stockQuotes = stockQuotes;
