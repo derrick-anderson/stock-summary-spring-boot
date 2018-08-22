@@ -37,8 +37,8 @@ public class StockQuoteRepositoryIntegrationTest {
     private StockQuoteRepository stockQuoteRepository;
 
     @Test
-    public void testGetTotalVolumeDBQuery(){
-        List<StockQuote> quotes = stockQuoteRepository.getTotalVolumeForDate("AAPL", "2018-06-22", "%Y-%m-%d");
+    public void testGetAllQuotesForDateDBQuery(){
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate("AAPL", "2018-06-22", "%Y-%m-%d");
         Integer totalVolume = quotes.stream()
                 .collect(Collectors.summingInt(StockQuote::getVolume));
         Assert.assertEquals(Integer.valueOf(560000), totalVolume );

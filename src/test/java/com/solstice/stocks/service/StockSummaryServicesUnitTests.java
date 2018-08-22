@@ -128,7 +128,7 @@ public class StockSummaryServicesUnitTests {
     @Test
     public void testGetTotalVolumeForDate(){
 
-        when(stockQuoteRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
+        when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         Integer totalVolume = stockServices.getTotalVolume("AAPL", "2018-06-22");
 

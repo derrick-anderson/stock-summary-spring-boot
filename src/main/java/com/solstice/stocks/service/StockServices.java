@@ -119,7 +119,7 @@ public class StockServices {
 
         String dateFormat = getDateFormat(dateIn);
 
-        quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, dateFormat);
+        quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
 
         Integer totalVolume = quotes.stream()
                 .collect(Collectors.summingInt(StockQuote::getVolume));
