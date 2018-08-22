@@ -132,6 +132,12 @@ public class StockServices {
 
     public BigDecimal getLowPrice(String symbol, String dateIn){
         //todo: Create Implementation
-        return null;
+        String[] dateParts = dateIn.split("-");
+        String dateFormat = "%Y-%m";
+        if(dateParts.length == 3){
+            dateFormat = "%Y-%m-%d";
+        }
+
+        return stockQuoteRepository.getLowPriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
 }
