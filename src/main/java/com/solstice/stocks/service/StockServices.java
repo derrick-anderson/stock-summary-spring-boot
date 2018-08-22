@@ -129,9 +129,9 @@ public class StockServices {
         return stockQuoteRepository.getHighPriceForDate(symbol,dateIn, dateFormat).getPrice();
     }
 
-//
-//    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
-//        //todo: Create Implementation
-//        return null;
-//    }
+
+    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
+        //todo: Create Implementation
+        return null;
+    }
 }
