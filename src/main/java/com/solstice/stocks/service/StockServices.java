@@ -102,12 +102,7 @@ public class StockServices {
 
         List<StockQuote> quotes = new ArrayList<>();
 
-        String[] dateParts = dateIn.split("-");
-
-        String dateFormat = "%Y-%m";
-        if(dateParts.length == 3){
-            dateFormat = "%Y-%m-%d";
-        }
+        String dateFormat = getDateFormat(dateIn);
 
         quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, dateFormat);
 
@@ -117,14 +112,20 @@ public class StockServices {
         return totalVolume;
     }
 
+    private String getDateFormat(String dateIn) {
+        String[] dateParts = dateIn.split("-");
+
+        String dateFormat = "%Y-%m";
+        if (dateParts.length == 3) {
+            dateFormat = "%Y-%m-%d";
+        }
+        return dateFormat;
+    }
+
 
     public BigDecimal getHighPrice(String symbol, String dateIn){
 
-        String[] dateParts = dateIn.split("-");
-        String dateFormat = "%Y-%m";
-        if(dateParts.length == 3){
-            dateFormat = "%Y-%m-%d";
-        }
+        String dateFormat = getDateFormat(dateIn);
 
         return stockQuoteRepository.getHighPriceForDate(symbol,dateIn, dateFormat).getPrice();
     }
@@ -132,11 +133,7 @@ public class StockServices {
 
     public BigDecimal getLowPrice(String symbol, String dateIn){
 
-        String[] dateParts = dateIn.split("-");
-        String dateFormat = "%Y-%m";
-        if(dateParts.length == 3){
-            dateFormat = "%Y-%m-%d";
-        }
+        String dateFormat = getDateFormat(dateIn);
 
         return stockQuoteRepository.getLowPriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
@@ -144,11 +141,7 @@ public class StockServices {
 
     public BigDecimal getOpenPrice(String symbol, String dateIn){
 
-        String[] dateParts = dateIn.split("-");
-        String dateFormat = "%Y-%m";
-        if(dateParts.length == 3){
-            dateFormat = "%Y-%m-%d";
-        }
+        String dateFormat = getDateFormat(dateIn);
 
         return stockQuoteRepository.getOpenPriceForDate(symbol,dateIn,dateFormat).getPrice();
 
@@ -157,11 +150,7 @@ public class StockServices {
 
     public BigDecimal getClosePrice(String symbol, String dateIn){
         //todo:Implement Class
-        String[] dateParts = dateIn.split("-");
-        String dateFormat = "%Y-%m";
-        if(dateParts.length == 3){
-            dateFormat = "%Y-%m-%d";
-        }
+        String dateFormat = getDateFormat(dateIn);
 
         return stockQuoteRepository.getClosePriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
