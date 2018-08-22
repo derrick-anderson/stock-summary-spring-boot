@@ -152,4 +152,10 @@ public class StockServices {
         return stockQuoteRepository.getOpenPriceForDate(symbol,dateIn,dateFormat).getPrice();
 
     }
+
+
+    public BigDecimal getClosePrice(String symob, String dateIn){
+        //todo:Implement Class
+        return null;
+    }
 }
