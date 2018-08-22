@@ -16,6 +16,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,4 +43,11 @@ public class StockQuoteRepositoryIntegrationTest {
                 .collect(Collectors.summingInt(StockQuote::getVolume));
         Assert.assertEquals(Integer.valueOf(560000), totalVolume );
     }
+
+    @Test
+    public void testGetHighPriceDBQuery(){
+        StockQuote highQuote = stockQuoteRepository.getHighPriceForDate("AAPL", "2018-06-22", "%Y-%m-%d");
+        BigDecimal highPrice = highQuote.getPrice();
+
+        Assert.assertEquals(new BigDecimal(180000), highPrice);    }
 }
