@@ -50,6 +50,12 @@ public class StockSummaryServicesUnitTests {
             180000,
             new Date()
             );
+    StockQuote lowQuote = new StockQuote(
+            "AAPL",
+            new BigDecimal(1200),
+            150000,
+            new Date()
+            );
 
 
 
@@ -135,11 +141,6 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testGetHighPriceForDate(){
-//        StockQuote aQuote = new StockQuote();
-//        aQuote.setSymbol("AAPL");
-//        aQuote.setPrice(new BigDecimal(1500));
-//        aQuote.setVolume(150000);
-//        aQuote.setDate(new Date());
 
         when(stockQuoteRepository.getHighPriceForDate(any(), any(), any())).thenReturn(highQuote);
 
@@ -155,15 +156,10 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testGetLowPriceForDate(){
-        StockQuote aQuote = new StockQuote();
-        aQuote.setSymbol("AAPL");
-        aQuote.setPrice(new BigDecimal(1200));
-        aQuote.setVolume(180000);
-        aQuote.setDate(new Date());
 
-        when(stockQuoteRepository.getLowPriceForDate(any(), any(), any())).thenReturn(aQuote);
+        when(stockQuoteRepository.getLowPriceForDate(any(), any(), any())).thenReturn(lowQuote);
 
-        BigDecimal lowPrice = new BigDecimal(0);
+        BigDecimal lowPrice;
 
         lowPrice = stockServices.getLowPrice("AAPL", "2018-06-22");
 
