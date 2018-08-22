@@ -154,7 +154,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal getClosePrice(String symob, String dateIn){
+    public BigDecimal getClosePrice(String symobl, String dateIn){
         //todo:Implement Class
         return null;
     }
