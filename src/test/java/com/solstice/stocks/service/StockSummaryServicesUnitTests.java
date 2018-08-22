@@ -144,4 +144,18 @@ public class StockSummaryServicesUnitTests {
     }
 
 
+    @Test
+    public void testGetLowPriceForDate(){
+        StockQuote aQuote = new StockQuote();
+        aQuote.setSymbol("AAPL");
+        aQuote.setPrice(new BigDecimal(1200));
+        aQuote.setVolume(180000);
+        aQuote.setDate(new Date());
+
+        when(stockQuoteRepository.getLowPriceForDate(any(), any(), any())).thenReturn(aQuote);
+
+        BigDecimal lowPrice = new BigDecimal;
+
+        lowPrice = stockServices.getLowPrice("AAPL", "2018-06-22");
+    }
 }
