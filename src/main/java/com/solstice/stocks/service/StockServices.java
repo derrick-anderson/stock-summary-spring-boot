@@ -131,7 +131,6 @@ public class StockServices {
     public BigDecimal getHighPrice(String symbol, String dateIn){
 
         String dateFormat = getDateFormat(dateIn);
-
         return stockQuoteRepository.getHighPriceForDate(symbol,dateIn, dateFormat).getPrice();
     }
 
@@ -158,5 +157,10 @@ public class StockServices {
         String dateFormat = getDateFormat(dateIn);
 
         return stockQuoteRepository.getClosePriceForDate(symbol, dateIn, dateFormat).getPrice();
+    }
+
+
+    public BigDecimal determineHighPrice(List<StockQuote> quotes){
+        return null;
     }
 }
