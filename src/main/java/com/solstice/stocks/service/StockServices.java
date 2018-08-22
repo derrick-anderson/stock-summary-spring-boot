@@ -140,4 +140,8 @@ public class StockServices {
 
         return stockQuoteRepository.getLowPriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
+
+    public BigDecimal getOpenPrice(String symbol, String dateIn){
+        return null;
+    }
 }
