@@ -36,14 +36,8 @@ public class StockSummaryServicesUnitTests {
     @InjectMocks
     private StockServices stockServices;
 
-    @Before
-    public void setup() {
-
-        MockitoAnnotations.initMocks(this);
-
-    }
-
     //Mock Objects for Assertions
+
     private StockQuote highQuote = new StockQuote(
             "AAPL",
             new BigDecimal(1500),
@@ -60,7 +54,22 @@ public class StockSummaryServicesUnitTests {
         add(highQuote);
         add(lowQuote);
     }};
+    StockSummary aSummary = new StockSummary(
+            "AAPL",
+            new BigDecimal(100.00),
+            new BigDecimal(50.00),
+            new BigDecimal(150.00),
+            new BigDecimal(85.75),
+            525600
+    );
 
+
+    @Before
+    public void setup() {
+
+        MockitoAnnotations.initMocks(this);
+
+    }
 
     @Test
     public void testDailySummaryReturn(){
@@ -89,13 +98,6 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testMonthlySummaryReturn(){
-        StockSummary aSummary = new StockSummary();
-        aSummary.setSymbol("AAPL");
-        aSummary.setOpen_price(new BigDecimal(100.00));
-        aSummary.setHigh_price(new BigDecimal(150.00));
-        aSummary.setLow_price(new BigDecimal(50.00));
-        aSummary.setClosing_price(new BigDecimal(85.75));
-        aSummary.setVolume(525600);
 
         when(stockSymbolRepository.monthlySummaryQuery(any(String.class), any(int.class),any(int.class))).thenReturn(aSummary);
 
@@ -103,8 +105,8 @@ public class StockSummaryServicesUnitTests {
 
         assertEquals("AAPL", newSummary.getSymbol());
         assertEquals(new BigDecimal(100.00), newSummary.getOpen_price());
-        assertEquals(new BigDecimal(150.00), newSummary.getHigh_price());
         assertEquals(new BigDecimal(50.00), newSummary.getLow_price());
+        assertEquals(new BigDecimal(150.00), newSummary.getHigh_price());
         assertEquals(new BigDecimal(85.75), newSummary.getClosing_price());
         assertEquals(Integer.valueOf(525600), newSummary.getVolume());
 
