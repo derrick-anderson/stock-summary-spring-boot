@@ -56,6 +56,12 @@ public class StockSummaryServicesUnitTests {
             100000,
             new Date()
             );
+    private StockQuote closeQuote = new StockQuote(
+            "AAPL",
+            new BigDecimal(85.75),
+            130000,
+            new Date()
+    );
     private List<StockQuote> quoteList = new ArrayList<StockQuote>(){{
         add(highQuote);
         add(lowQuote);
@@ -175,5 +181,14 @@ public class StockSummaryServicesUnitTests {
 
 
     //todo: Write Test for get closing price
+    @Test
+    public void testGetClosePriceForDate(){
+
+        when(stockQuoteRepository.getClosePriceForDate(any(), any(), any())).thenReturn(closeQuote);
+
+        BigDecimal closePrice = stockServices.getClosePrice("AAPL", "2018-06-22");
+
+        assertEquals(new BigDecimal(85.75), closePrice);
+    }
 
 }
