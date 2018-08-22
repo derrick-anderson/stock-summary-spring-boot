@@ -2,6 +2,7 @@ package com.solstice.stocks.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
@@ -10,11 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -24,15 +24,15 @@ import static java.util.stream.Collectors.groupingBy;
 public class StockServices {
 
     private StockSymbolRepository symbolRepository;
+    private StockQuoteRepository stockQuoteRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Value("${datasource.url}")
     private URL dataUrl;
 
-    public StockServices(StockSymbolRepository repository) {
-
-        this.symbolRepository = repository;
-
+    public StockServices(StockSymbolRepository symbolRepository, StockQuoteRepository stockQuoteRepository) {
+        this.symbolRepository = symbolRepository;
+        this.stockQuoteRepository = stockQuoteRepository;
     }
 
     public List<StockQuote> getAllStocks(){
@@ -97,4 +97,32 @@ public class StockServices {
         else return new StockSummary();
     }
 
+
+    public Integer getTotalVolume(String symbol, String dateIn){
+
+        String[] dateParts = dateIn.split("-");
+        List<StockQuote> quotes = new ArrayList<>();
+
+        if(dateParts.length == 3){
+            quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, "%Y-%m-%d");
+        }
+        else{
+            quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, "%Y-%m");
+        }
+        Integer totalVolume = quotes.stream()
+                .collect(Collectors.summingInt(StockQuote::getVolume));
+        return totalVolume;
+    }
+
+
+    public BigDecimal getHighPrice(String symbol, String dateIn, String dateFormat){
+        //todo: Create Implementation
+        return null;
+    }
+
+
+//    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
+//        //todo: Create Implementation
+//        return null;
+//    }
 }

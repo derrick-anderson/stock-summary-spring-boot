@@ -1,6 +1,7 @@
 package com.solstice.stocks.service;
 
 
+import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
@@ -29,6 +30,9 @@ public class StockSummaryServicesUnitTests {
     @Mock
     private StockSymbolRepository stockSymbolRepository;
 
+    @Mock
+    private StockQuoteRepository stockQuoteRepository;
+
     @InjectMocks
     private StockServices stockServices;
 
@@ -38,6 +42,7 @@ public class StockSummaryServicesUnitTests {
         MockitoAnnotations.initMocks(this);
 
     }
+
 
     @Test
     public void testDailySummaryReturn(){
@@ -63,6 +68,7 @@ public class StockSummaryServicesUnitTests {
 
     }
 
+
     @Test
     public void testMonthlySummaryReturn(){
         StockSummary aSummary = new StockSummary();
@@ -86,6 +92,7 @@ public class StockSummaryServicesUnitTests {
 
     }
 
+
     @Test
     public void testGetTotalVolumeForDate(){
 
@@ -104,12 +111,18 @@ public class StockSummaryServicesUnitTests {
         quote2.setDate(new Date());
         quoteList.add(quote2);
 
-        when(stockSymbolRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
+    when(stockQuoteRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
 
-        Integer totalVolume = stockServices.getTotalVolume(null, null, null);
+        Integer totalVolume = stockServices.getTotalVolume("AAPL", "2018-06-22");
 
-        assertEquals(Integer.valueOf(320000), totalVolume);
+        assertEquals(Integer.valueOf(330000), totalVolume);
+
+
+        Integer totalVolume2 = stockServices.getTotalVolume("AAPL", "2018-06");
+
+        assertEquals(Integer.valueOf(330000), totalVolume2);
     }
+
 
 
 
