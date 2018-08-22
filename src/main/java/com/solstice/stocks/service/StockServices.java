@@ -100,29 +100,39 @@ public class StockServices {
 
     public Integer getTotalVolume(String symbol, String dateIn){
 
-        String[] dateParts = dateIn.split("-");
         List<StockQuote> quotes = new ArrayList<>();
 
+        String[] dateParts = dateIn.split("-");
+
+        String dateFormat = "%Y-%m";
         if(dateParts.length == 3){
-            quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, "%Y-%m-%d");
+            dateFormat = "%Y-%m-%d";
         }
-        else{
-            quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, "%Y-%m");
-        }
+
+        quotes = stockQuoteRepository.getTotalVolumeForDate(symbol, dateIn, dateFormat);
+
         Integer totalVolume = quotes.stream()
                 .collect(Collectors.summingInt(StockQuote::getVolume));
+
         return totalVolume;
     }
 
 
-    public BigDecimal getHighPrice(String symbol, String dateIn, String dateFormat){
+    public BigDecimal getHighPrice(String symbol, String dateIn){
+
         //todo: Create Implementation
-        return null;
+        String[] dateParts = dateIn.split("-");
+        String dateFormat = "%Y-%m";
+        if(dateParts.length == 3){
+            dateFormat = "%Y-%m-%d";
+        }
+
+        return stockQuoteRepository.getHighPriceForDate(symbol,dateIn, dateFormat).getPrice();
     }
 
 
-//    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
-//        //todo: Create Implementation
-//        return null;
-//    }
+    public BigDecimal getLowPrice(String symbol, String dateIn, String dateFormat){
+        //todo: Create Implementation
+        return null;
+    }
 }

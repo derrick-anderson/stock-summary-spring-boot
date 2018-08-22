@@ -111,7 +111,7 @@ public class StockSummaryServicesUnitTests {
         quote2.setDate(new Date());
         quoteList.add(quote2);
 
-    when(stockQuoteRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
+        when(stockQuoteRepository.getTotalVolumeForDate(any(), any(), any())).thenReturn(quoteList);
 
         Integer totalVolume = stockServices.getTotalVolume("AAPL", "2018-06-22");
 
@@ -124,7 +124,24 @@ public class StockSummaryServicesUnitTests {
     }
 
 
+    @Test
+    public void testGetHighPriceForDate(){
+        StockQuote aQuote = new StockQuote();
+        aQuote.setSymbol("AAPL");
+        aQuote.setPrice(new BigDecimal(1500));
+        aQuote.setVolume(150000);
+        aQuote.setDate(new Date());
 
+        when(stockQuoteRepository.getHighPriceForDate(any(), any(), any())).thenReturn(aQuote);
+
+        BigDecimal highPrice = stockServices.getHighPrice("AAPL", "2018-06-22");
+
+        assertEquals(new BigDecimal(1500), highPrice);
+
+        highPrice = stockServices.getHighPrice("AAPL", "2018-06");
+
+        assertEquals(new BigDecimal(1500), highPrice);
+    }
 
 
 }
