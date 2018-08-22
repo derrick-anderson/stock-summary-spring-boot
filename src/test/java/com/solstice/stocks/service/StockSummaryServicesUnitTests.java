@@ -154,8 +154,10 @@ public class StockSummaryServicesUnitTests {
 
         when(stockQuoteRepository.getLowPriceForDate(any(), any(), any())).thenReturn(aQuote);
 
-        BigDecimal lowPrice = new BigDecimal;
+        BigDecimal lowPrice = new BigDecimal(0);
 
         lowPrice = stockServices.getLowPrice("AAPL", "2018-06-22");
+
+        assertEquals(new BigDecimal(1200), lowPrice);
     }
 }
