@@ -143,6 +143,7 @@ public class StockServices {
 
 
     public BigDecimal getOpenPrice(String symbol, String dateIn){
+
         String[] dateParts = dateIn.split("-");
         String dateFormat = "%Y-%m";
         if(dateParts.length == 3){
@@ -156,6 +157,12 @@ public class StockServices {
 
     public BigDecimal getClosePrice(String symbol, String dateIn){
         //todo:Implement Class
-        return null;
+        String[] dateParts = dateIn.split("-");
+        String dateFormat = "%Y-%m";
+        if(dateParts.length == 3){
+            dateFormat = "%Y-%m-%d";
+        }
+
+        return stockQuoteRepository.getClosePriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
 }
