@@ -27,6 +27,8 @@ public interface StockQuoteRepository extends JpaRepository<StockQuote, Long> {
     @Query("SELECT s FROM StockQuote s")
     StockQuote getOpenPriceForDate(String symbol, String dateIn, String dateFormat);
 
-    //todo: Create get closing price
+    //todo: Implement Query
+    @Query("SELECT s FROM StockQuote s")
+    StockQuote getClosePriceForDate(String symbol, String dateIn, String dateFormat);
 
 }

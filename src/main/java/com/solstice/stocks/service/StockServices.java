@@ -141,6 +141,7 @@ public class StockServices {
         return stockQuoteRepository.getLowPriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
 
+
     public BigDecimal getOpenPrice(String symbol, String dateIn){
         String[] dateParts = dateIn.split("-");
         String dateFormat = "%Y-%m";
