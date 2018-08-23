@@ -190,7 +190,10 @@ public class StockServices {
 
     public BigDecimal determineClosingPrice(List<StockQuote> quotes){
 
-        return null;
+        Optional<StockQuote> closePrice = quotes.stream()
+                .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getDate)));
+
+        return closePrice.isPresent()? closePrice.get().getPrice(): null;
 
     }
 }
