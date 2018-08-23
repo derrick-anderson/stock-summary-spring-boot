@@ -44,10 +44,4 @@ public class StockQuoteRepositoryIntegrationTest {
         Assert.assertEquals(Integer.valueOf(560000), totalVolume );
     }
 
-    @Test
-    public void testGetHighPriceDBQuery(){
-        StockQuote highQuote = stockQuoteRepository.getHighPriceForDate("AAPL", "2018-06-22", "%Y-%m-%d");
-        BigDecimal highPrice = highQuote.getPrice();
-
-        Assert.assertEquals(new BigDecimal(180000), highPrice);    }
 }
