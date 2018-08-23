@@ -247,7 +247,7 @@ public class StockSummaryServicesUnitTests {
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
-        StockSummary summary = stockServices.createSummary(null, null);
+        StockSummary summary = stockServices.createSummary("AAPL", "2018-06-22");
 
         assertEquals("AAPL", summary.getSymbol());
         assertEquals(new BigDecimal(1500.00), summary.getOpen_price());

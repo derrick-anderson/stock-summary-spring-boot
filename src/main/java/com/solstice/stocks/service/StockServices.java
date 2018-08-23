@@ -109,9 +109,21 @@ public class StockServices {
         } else return new StockSummary();
     }
 
-    public StockSummary createSummary(String stockIn, String dateIn) {
+    public StockSummary createSummary(String symbol, String dateIn) {
 
-        return null;
+        String dateFormat = getDateFormat(dateIn);
+
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
+
+        Integer totalVolume = getTotalVolume(symbol, dateIn);
+        BigDecimal openPrice = determineOpenPrice(quotes);
+        BigDecimal highPrice = determineHighPrice(quotes);
+        BigDecimal lowPrice = determineLowPrice(quotes);
+        BigDecimal closePrice = determineClosingPrice(quotes);
+
+        StockSummary summary = new StockSummary(symbol, openPrice, lowPrice, highPrice, closePrice, totalVolume);
+
+        return summary;
 
     }
 
@@ -161,6 +173,10 @@ public class StockServices {
         return stockQuoteRepository.getClosePriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
 
+
+    public BigDecimal determineTotalVolume(List<StockQuote> quotes){
+        return null;
+    }
 
     public BigDecimal determineHighPrice(List<StockQuote> quotes){
 
