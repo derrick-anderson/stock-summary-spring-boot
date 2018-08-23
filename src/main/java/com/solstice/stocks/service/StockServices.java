@@ -161,6 +161,18 @@ public class StockServices {
 
 
     public BigDecimal determineHighPrice(List<StockQuote> quotes){
-        return null;
+
+        Optional<StockQuote> highQuote = quotes.stream()
+                .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getPrice)));
+
+        return highQuote.isPresent()? highQuote.get().getPrice(): null;
+    }
+
+
+    public BigDecimal determineLowPrice(List<StockQuote> quotes){
+        Optional<StockQuote> lowQuote = quotes.stream()
+                .collect(Collectors.minBy(Comparator.comparing(StockQuote::getPrice)));
+
+        return lowQuote.isPresent()? lowQuote.get().getPrice(): null;
     }
 }

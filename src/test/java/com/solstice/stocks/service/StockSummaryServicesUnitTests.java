@@ -200,4 +200,14 @@ public class StockSummaryServicesUnitTests {
 
         assertEquals(new BigDecimal(1500), highPrice);
     }
+
+    @Test
+    public void testDetermineLowPrice(){
+        when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
+
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
+        BigDecimal highPrice = stockServices.determineLowPrice(quotes);
+
+        assertEquals(new BigDecimal(1200), highPrice);
+    }
 }
