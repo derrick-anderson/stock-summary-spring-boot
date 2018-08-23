@@ -37,7 +37,7 @@ public class StockServices {
     }
 
 
-    public List<StockQuote> getAllStocks(){
+    public List<StockQuote> getAllStocks() {
 
         List<StockQuote> stockList = null;
 
@@ -46,8 +46,7 @@ public class StockServices {
             stockList = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
             });
 
-        }
-        catch( Exception e ){
+        } catch (Exception e) {
 
             System.err.println(e.getMessage());
 
@@ -56,13 +55,13 @@ public class StockServices {
     }
 
 
-    public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes){
+    public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes) {
 
         Set<StockSymbol> groupedSymbols = new HashSet<>();
 
-        Map<String, List<StockQuote> > allQuotesGrouped = allQuotes.stream().collect(groupingBy(StockQuote::getSymbol));
+        Map<String, List<StockQuote>> allQuotesGrouped = allQuotes.stream().collect(groupingBy(StockQuote::getSymbol));
 
-        for( String symbol : allQuotesGrouped.keySet()){
+        for (String symbol : allQuotesGrouped.keySet()) {
 
             StockSymbol entry = new StockSymbol(symbol, allQuotesGrouped.get(symbol));
             groupedSymbols.add(entry);
@@ -73,7 +72,7 @@ public class StockServices {
     }
 
 
-    public void loadStocks(){
+    public void loadStocks() {
 
         symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
 
@@ -91,27 +90,30 @@ public class StockServices {
     }
 
 
-    public StockSummary getSummary(String stockIn, String dateIn){
+    public StockSummary getSummary(String stockIn, String dateIn) {
 
         String[] dateSet = dateIn.split("-");
 
-        if(dateSet.length == 3) {
+        if (dateSet.length == 3) {
 
             int yearIn = Integer.valueOf(dateSet[0]);
             int monthIn = Integer.valueOf(dateSet[1]);
             int dayIn = Integer.valueOf(dateSet[2]);
             return symbolRepository.dailySummaryQuery(stockIn.toUpperCase(), yearIn, monthIn, dayIn);
 
-        }
-        else if( dateSet.length == 2){
+        } else if (dateSet.length == 2) {
 
             int yearIn = Integer.valueOf(dateSet[0]);
             int monthIn = Integer.valueOf(dateSet[1]);
             return symbolRepository.monthlySummaryQuery(stockIn.toUpperCase(), yearIn, monthIn);
-        }
-        else return new StockSummary();
+        } else return new StockSummary();
     }
 
+    public StockSummary createSummary(String stockIn, String dateIn) {
+
+        return null;
+
+    }
 
     public Integer getTotalVolume(String symbol, String dateIn){
 
