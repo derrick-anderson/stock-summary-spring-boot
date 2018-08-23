@@ -240,4 +240,20 @@ public class StockSummaryServicesUnitTests {
         assertEquals(new BigDecimal(1200), closePrice);
 
     }
+
+
+    @Test
+    public void testCreateSummary(){
+
+        when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
+
+        StockSummary summary = stockServices.createSummary(null, null);
+
+        assertEquals("AAPL", summary.getSymbol());
+        assertEquals(new BigDecimal(1500.00), summary.getOpen_price());
+        assertEquals(new BigDecimal(1500.00), summary.getHigh_price());
+        assertEquals(new BigDecimal(1200.00), summary.getLow_price());
+        assertEquals(new BigDecimal(1200.00), summary.getClosing_price());
+        assertEquals(Integer.valueOf(330000), summary.getVolume());
+    }
 }
