@@ -174,7 +174,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal determineTotalVolume(List<StockQuote> quotes){
+    public Integer determineTotalVolume(List<StockQuote> quotes){
         return null;
     }
 

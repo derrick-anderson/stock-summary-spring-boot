@@ -132,14 +132,10 @@ public class StockSummaryServicesUnitTests {
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
-        Integer totalVolume = stockServices.getTotalVolume("AAPL", "2018-06-22");
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
+        Integer totalVolume = stockServices.determineTotalVolume(quotes);
 
         assertEquals(Integer.valueOf(330000), totalVolume);
-
-
-        Integer totalVolume2 = stockServices.getTotalVolume("AAPL", "2018-06");
-
-        assertEquals(Integer.valueOf(330000), totalVolume2);
     }
 
 
@@ -256,4 +252,5 @@ public class StockSummaryServicesUnitTests {
         assertEquals(new BigDecimal(1200.00), summary.getClosing_price());
         assertEquals(Integer.valueOf(330000), summary.getVolume());
     }
+
 }
