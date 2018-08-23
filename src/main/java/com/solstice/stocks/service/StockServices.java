@@ -186,4 +186,11 @@ public class StockServices {
         return openQuote.isPresent()? openQuote.get().getPrice(): null;
 
     }
+
+
+    public BigDecimal determineClosingPrice(List<StockQuote> quotes){
+
+        return null;
+
+    }
 }
