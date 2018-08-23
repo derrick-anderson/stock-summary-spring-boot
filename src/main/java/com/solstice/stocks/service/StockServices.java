@@ -96,7 +96,7 @@ public class StockServices {
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
 
-        Integer totalVolume = determineTotalVolume(quotes);
+        Integer totalVolume = getTotalVolume(quotes);
         BigDecimal openPrice = determineOpenPrice(quotes);
         BigDecimal highPrice = determineHighPrice(quotes);
         BigDecimal lowPrice = determineLowPrice(quotes);
@@ -106,20 +106,6 @@ public class StockServices {
 
         return summary;
 
-    }
-
-    public Integer getTotalVolume(String symbol, String dateIn){
-
-        List<StockQuote> quotes = new ArrayList<>();
-
-        String dateFormat = getDateFormat(dateIn);
-
-        quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
-
-        Integer totalVolume = quotes.stream()
-                .collect(Collectors.summingInt(StockQuote::getVolume));
-
-        return totalVolume;
     }
 
 
@@ -155,7 +141,7 @@ public class StockServices {
     }
 
 
-    public Integer determineTotalVolume(List<StockQuote> quotes){
+    public Integer getTotalVolume(List<StockQuote> quotes){
 
         Integer totalVolume = quotes.stream()
                 .collect(Collectors.summingInt(StockQuote::getVolume));

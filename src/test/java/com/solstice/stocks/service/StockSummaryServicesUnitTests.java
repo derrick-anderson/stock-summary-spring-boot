@@ -110,12 +110,12 @@ public class StockSummaryServicesUnitTests {
 
 
     @Test
-    public void testGetTotalVolumeForDate(){
+    public void testGetTotalVolume(){
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
-
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
-        Integer totalVolume = stockServices.determineTotalVolume(quotes);
+
+        Integer totalVolume = stockServices.getTotalVolume(quotes);
 
         assertEquals(Integer.valueOf(330000), totalVolume);
     }
