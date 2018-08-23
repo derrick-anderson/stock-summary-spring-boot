@@ -115,7 +115,7 @@ public class StockServices {
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
 
-        Integer totalVolume = getTotalVolume(symbol, dateIn);
+        Integer totalVolume = determineTotalVolume(quotes);
         BigDecimal openPrice = determineOpenPrice(quotes);
         BigDecimal highPrice = determineHighPrice(quotes);
         BigDecimal lowPrice = determineLowPrice(quotes);
@@ -181,6 +181,7 @@ public class StockServices {
 
         return totalVolume;
     }
+
 
     public BigDecimal determineHighPrice(List<StockQuote> quotes){
 
