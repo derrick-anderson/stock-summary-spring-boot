@@ -180,7 +180,10 @@ public class StockServices {
 
     public BigDecimal determineOpenPrice(List<StockQuote> quotes){
 
-        return null;
+        Optional<StockQuote> openQuote = quotes.stream()
+                .collect(Collectors.minBy(Comparator.comparing(StockQuote::getDate)));
+
+        return openQuote.isPresent()? openQuote.get().getPrice(): null;
 
     }
 }
