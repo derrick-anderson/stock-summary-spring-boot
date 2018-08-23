@@ -223,5 +223,19 @@ public class StockSummaryServicesUnitTests {
         BigDecimal openPrice = stockServices.determineOpenPrice(quotes);
 
         assertEquals(new BigDecimal(1500), openPrice);
+
+    }
+
+
+    @Test
+    public void testDetermineClsingPrice(){
+
+        when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
+
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
+        BigDecimal closePrice = stockServices.determineClosingPrice(quotes);
+
+        assertEquals(new BigDecimal(1200), closePrice);
+
     }
 }
