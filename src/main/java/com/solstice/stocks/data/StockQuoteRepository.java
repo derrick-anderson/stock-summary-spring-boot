@@ -17,29 +17,4 @@ public interface StockQuoteRepository extends JpaRepository<StockQuote, Long> {
                                          @Param("dateIn") String dateIn,
                                          @Param("dateFormat") String dateFormat);
 
-    //todo: Implement Query
-    @Query("SELECT s FROM StockQuote s")
-    StockQuote getHighPriceForDate(@Param("symbolIn") String symbol,
-                                   @Param("dateIn") String dateIn,
-                                   @Param("dateFormat") String dateFormat);
-
-    //todo: Implement Query
-    @Query("SELECT s FROM StockQuote s")
-    StockQuote getLowPriceForDate(@Param("symbolIn") String symbol,
-                                  @Param("dateIn") String dateIn,
-                                  @Param("dateFormat") String dateFormat);
-
-    //Stretch Goals
-    //todo: Implement Query
-    @Query("SELECT s FROM StockQuote s")
-    StockQuote getOpenPriceForDate(@Param("symbolIn") String symbol,
-                                   @Param("dateIn") String dateIn,
-                                   @Param("dateFormat") String dateFormat);
-
-    //todo: Implement Query
-    @Query("SELECT s FROM StockQuote s")
-    StockQuote getClosePriceForDate(@Param("symbolIn") String symbol,
-                                    @Param("dateIn") String dateIn,
-                                    @Param("dateFormat") String dateFormat);
-
 }
