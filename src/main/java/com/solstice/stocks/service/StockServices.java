@@ -90,8 +90,8 @@ public class StockServices {
     }
 
 
-    public StockSummary getSummary(String stockIn, String dateIn) {
-
+//    public StockSummary getSummary(String stockIn, String dateIn) {
+//
 //        String[] dateSet = dateIn.split("-");
 //
 //        if (dateSet.length == 3) {
@@ -107,11 +107,11 @@ public class StockServices {
 //            int monthIn = Integer.valueOf(dateSet[1]);
 //            return symbolRepository.monthlySummaryQuery(stockIn.toUpperCase(), yearIn, monthIn);
 //        } else return new StockSummary();
+//
+//        return createSummary(stockIn, dateIn);
+//    }
 
-        return createSummary(stockIn, dateIn);
-    }
-
-    public StockSummary createSummary(String symbol, String dateIn) {
+    public StockSummary getSummary(String symbol, String dateIn) {
 
         String dateFormat = getDateFormat(dateIn);
 
