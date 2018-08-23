@@ -204,11 +204,24 @@ public class StockSummaryServicesUnitTests {
 
     @Test
     public void testDetermineLowPrice(){
+
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
         BigDecimal highPrice = stockServices.determineLowPrice(quotes);
 
         assertEquals(new BigDecimal(1200), highPrice);
+    }
+
+
+    @Test
+    public void testDetermineOpenPrice(){
+
+        when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
+
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
+        BigDecimal openPrice = stockServices.determineOpenPrice(quotes);
+
+        assertEquals(new BigDecimal(1500), openPrice);
     }
 }
