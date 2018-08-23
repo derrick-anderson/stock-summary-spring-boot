@@ -201,6 +201,7 @@ public class StockSummaryServicesUnitTests {
         assertEquals(new BigDecimal(1500), highPrice);
     }
 
+
     @Test
     public void testDetermineLowPrice(){
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
