@@ -175,7 +175,11 @@ public class StockServices {
 
 
     public Integer determineTotalVolume(List<StockQuote> quotes){
-        return null;
+
+        Integer totalVolume = quotes.stream()
+                .collect(Collectors.summingInt(StockQuote::getVolume));
+
+        return totalVolume;
     }
 
     public BigDecimal determineHighPrice(List<StockQuote> quotes){
