@@ -97,47 +97,15 @@ public class StockServices {
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
 
         Integer totalVolume = getTotalVolume(quotes);
-        BigDecimal openPrice = determineOpenPrice(quotes);
-        BigDecimal highPrice = determineHighPrice(quotes);
-        BigDecimal lowPrice = determineLowPrice(quotes);
-        BigDecimal closePrice = determineClosingPrice(quotes);
+        BigDecimal openPrice = getOpeningPrice(quotes);
+        BigDecimal highPrice = getHighPrice(quotes);
+        BigDecimal lowPrice = getLowPrice(quotes);
+        BigDecimal closePrice = getClosingPrice(quotes);
 
         StockSummary summary = new StockSummary(symbol, openPrice, lowPrice, highPrice, closePrice, totalVolume);
 
         return summary;
 
-    }
-
-
-    public BigDecimal getHighPrice(String symbol, String dateIn){
-
-        String dateFormat = getDateFormat(dateIn);
-        return stockQuoteRepository.getHighPriceForDate(symbol,dateIn, dateFormat).getPrice();
-    }
-
-
-    public BigDecimal getLowPrice(String symbol, String dateIn){
-
-        String dateFormat = getDateFormat(dateIn);
-
-        return stockQuoteRepository.getLowPriceForDate(symbol, dateIn, dateFormat).getPrice();
-    }
-
-
-    public BigDecimal getOpenPrice(String symbol, String dateIn){
-
-        String dateFormat = getDateFormat(dateIn);
-
-        return stockQuoteRepository.getOpenPriceForDate(symbol,dateIn,dateFormat).getPrice();
-
-    }
-
-
-    public BigDecimal getClosePrice(String symbol, String dateIn){
-        //todo:Implement Class
-        String dateFormat = getDateFormat(dateIn);
-
-        return stockQuoteRepository.getClosePriceForDate(symbol, dateIn, dateFormat).getPrice();
     }
 
 
@@ -150,7 +118,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal determineHighPrice(List<StockQuote> quotes){
+    public BigDecimal getHighPrice(List<StockQuote> quotes){
 
         Optional<StockQuote> highQuote = quotes.stream()
                 .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getPrice)));
@@ -159,7 +127,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal determineLowPrice(List<StockQuote> quotes){
+    public BigDecimal getLowPrice(List<StockQuote> quotes){
 
         Optional<StockQuote> lowQuote = quotes.stream()
                 .collect(Collectors.minBy(Comparator.comparing(StockQuote::getPrice)));
@@ -168,7 +136,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal determineOpenPrice(List<StockQuote> quotes){
+    public BigDecimal getOpeningPrice(List<StockQuote> quotes){
 
         Optional<StockQuote> openQuote = quotes.stream()
                 .collect(Collectors.minBy(Comparator.comparing(StockQuote::getDate)));
@@ -178,7 +146,7 @@ public class StockServices {
     }
 
 
-    public BigDecimal determineClosingPrice(List<StockQuote> quotes){
+    public BigDecimal getClosingPrice(List<StockQuote> quotes){
 
         Optional<StockQuote> closePrice = quotes.stream()
                 .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getDate)));

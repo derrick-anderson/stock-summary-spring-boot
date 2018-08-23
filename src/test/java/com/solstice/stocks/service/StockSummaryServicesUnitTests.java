@@ -122,85 +122,35 @@ public class StockSummaryServicesUnitTests {
 
 
     @Test
-    public void testGetHighPriceForDate(){
-
-        when(stockQuoteRepository.getHighPriceForDate(any(), any(), any())).thenReturn(highQuote);
-
-        BigDecimal highPrice = stockServices.getHighPrice("AAPL", "2018-06-22");
-
-        assertEquals(new BigDecimal(1500), highPrice);
-
-        highPrice = stockServices.getHighPrice("AAPL", "2018-06");
-
-        assertEquals(new BigDecimal(1500), highPrice);
-    }
-
-
-    @Test
-    public void testGetLowPriceForDate(){
-
-        when(stockQuoteRepository.getLowPriceForDate(any(), any(), any())).thenReturn(lowQuote);
-
-        BigDecimal lowPrice;
-
-        lowPrice = stockServices.getLowPrice("AAPL", "2018-06-22");
-
-        assertEquals(new BigDecimal(1200), lowPrice);
-    }
-
-
-    @Test
-    public void testGetOpenPriceForDate(){
-
-        when(stockQuoteRepository.getOpenPriceForDate(any(), any(), any())).thenReturn(openQuote);
-
-        BigDecimal openPrice = stockServices.getOpenPrice("AAPL", "2018-06-22");
-
-        assertEquals(new BigDecimal(100.00), openPrice);
-    }
-
-
-    @Test
-    public void testGetClosePriceForDate(){
-
-        when(stockQuoteRepository.getClosePriceForDate(any(), any(), any())).thenReturn(closeQuote);
-
-        BigDecimal closePrice = stockServices.getClosePrice("AAPL", "2018-06-22");
-
-        assertEquals(new BigDecimal(85.75), closePrice);
-    }
-
-
-    @Test
-    public void testDetermineHighPrice(){
+    public void testGetHighPrice(){
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
-        BigDecimal highPrice = stockServices.determineHighPrice(quotes);
+        BigDecimal highPrice = stockServices.getHighPrice(quotes);
 
         assertEquals(new BigDecimal(1500), highPrice);
     }
 
 
     @Test
-    public void testDetermineLowPrice(){
+    public void testGetLowPrice(){
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
-        BigDecimal highPrice = stockServices.determineLowPrice(quotes);
+        BigDecimal highPrice = stockServices.getLowPrice(quotes);
 
         assertEquals(new BigDecimal(1200), highPrice);
     }
 
 
     @Test
-    public void testDetermineOpenPrice(){
+    public void testGetOpeningPrice(){
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
-        BigDecimal openPrice = stockServices.determineOpenPrice(quotes);
+        BigDecimal openPrice = stockServices.getOpeningPrice(quotes);
 
         assertEquals(new BigDecimal(1500), openPrice);
 
@@ -208,12 +158,12 @@ public class StockSummaryServicesUnitTests {
 
 
     @Test
-    public void testDetermineClosingPrice(){
+    public void testGetClosingPrice(){
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
         List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(null,null,null);
-        BigDecimal closePrice = stockServices.determineClosingPrice(quotes);
+        BigDecimal closePrice = stockServices.getClosingPrice(quotes);
 
         assertEquals(new BigDecimal(1200), closePrice);
 
