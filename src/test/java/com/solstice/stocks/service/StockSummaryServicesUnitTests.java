@@ -91,20 +91,20 @@ public class StockSummaryServicesUnitTests {
         StockSummary newSummary = stockServices.getSummary("AAPL", "2018-06-22");
 
         assertEquals("AAPL", newSummary.getSymbol());
-        assertEquals(new BigDecimal(1500.00), newSummary.getOpen_price());
-        assertEquals(new BigDecimal(1500.00), newSummary.getHigh_price());
-        assertEquals(new BigDecimal(1200.00), newSummary.getLow_price());
-        assertEquals(new BigDecimal(1200.00), newSummary.getClosing_price());
+        assertEquals(new BigDecimal(1500.00), newSummary.getOpenPrice());
+        assertEquals(new BigDecimal(1500.00), newSummary.getHighPrice());
+        assertEquals(new BigDecimal(1200.00), newSummary.getLowPrice());
+        assertEquals(new BigDecimal(1200.00), newSummary.getClosingPrice());
         assertEquals(Integer.valueOf(330000), newSummary.getVolume());
 
 
         StockSummary newSummary2 = stockServices.getSummary("AAPL", "2018-06");
 
         assertEquals("AAPL", newSummary2.getSymbol());
-        assertEquals(new BigDecimal(1500.00), newSummary2.getOpen_price());
-        assertEquals(new BigDecimal(1500.00), newSummary2.getHigh_price());
-        assertEquals(new BigDecimal(1200.00), newSummary2.getLow_price());
-        assertEquals(new BigDecimal(1200.00), newSummary2.getClosing_price());
+        assertEquals(new BigDecimal(1500.00), newSummary2.getOpenPrice());
+        assertEquals(new BigDecimal(1500.00), newSummary2.getHighPrice());
+        assertEquals(new BigDecimal(1200.00), newSummary2.getLowPrice());
+        assertEquals(new BigDecimal(1200.00), newSummary2.getClosingPrice());
         assertEquals(Integer.valueOf(330000), newSummary2.getVolume());
     }
 
