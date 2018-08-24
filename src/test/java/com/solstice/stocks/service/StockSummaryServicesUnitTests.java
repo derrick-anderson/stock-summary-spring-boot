@@ -2,7 +2,6 @@ package com.solstice.stocks.service;
 
 
 import com.solstice.stocks.data.StockQuoteRepository;
-import com.solstice.stocks.data.StockSymbolRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
 import org.junit.Before;
@@ -27,8 +26,6 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class StockSummaryServicesUnitTests {
 
-    @Mock
-    private StockSymbolRepository stockSymbolRepository;
 
     @Mock
     private StockQuoteRepository stockQuoteRepository;
@@ -39,25 +36,25 @@ public class StockSummaryServicesUnitTests {
     //Mock Objects for Assertions
 
     private StockQuote highQuote = new StockQuote(
-            "AAPL",
+            "1",
             new BigDecimal(1500),
             180000,
             new Date()
             );
     private StockQuote lowQuote = new StockQuote(
-            "AAPL",
+            "1",
             new BigDecimal(1200),
             150000,
             Date.from( (new Date().toInstant()).plusSeconds(500) )
     );
     private StockQuote openQuote = new StockQuote(
-            "AAPL",
+            "1",
             new BigDecimal(100.00),
             100000,
             new Date()
             );
     private StockQuote closeQuote = new StockQuote(
-            "AAPL",
+            "1",
             new BigDecimal(85.75),
             130000,
             new Date()
@@ -67,7 +64,7 @@ public class StockSummaryServicesUnitTests {
         add(lowQuote);
     }};
     StockSummary aSummary = new StockSummary(
-            "AAPL",
+            "1",
             new BigDecimal(100.00),
             new BigDecimal(50.00),
             new BigDecimal(150.00),
@@ -88,9 +85,9 @@ public class StockSummaryServicesUnitTests {
 
         when(stockQuoteRepository.getAllQuotesForDate(any(), any(), any())).thenReturn(quoteList);
 
-        StockSummary newSummary = stockServices.getSummary("AAPL", "2018-06-22");
+        StockSummary newSummary = stockServices.getSummary("1", "2018-06-22");
 
-        assertEquals("AAPL", newSummary.getSymbol());
+        assertEquals("1", newSummary.getSymbol());
         assertEquals(new BigDecimal(1500.00), newSummary.getOpenPrice());
         assertEquals(new BigDecimal(1500.00), newSummary.getHighPrice());
         assertEquals(new BigDecimal(1200.00), newSummary.getLowPrice());
@@ -98,9 +95,9 @@ public class StockSummaryServicesUnitTests {
         assertEquals(Integer.valueOf(330000), newSummary.getVolume());
 
 
-        StockSummary newSummary2 = stockServices.getSummary("AAPL", "2018-06");
+        StockSummary newSummary2 = stockServices.getSummary("1", "2018-06");
 
-        assertEquals("AAPL", newSummary2.getSymbol());
+        assertEquals("1", newSummary2.getSymbol());
         assertEquals(new BigDecimal(1500.00), newSummary2.getOpenPrice());
         assertEquals(new BigDecimal(1500.00), newSummary2.getHighPrice());
         assertEquals(new BigDecimal(1200.00), newSummary2.getLowPrice());
