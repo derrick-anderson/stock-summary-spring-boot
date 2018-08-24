@@ -5,23 +5,23 @@ import java.math.BigDecimal;
 public class StockSummary {
 
     private String symbol;
-    private BigDecimal open_price;
-    private BigDecimal low_price;
-    private BigDecimal high_price;
-    private BigDecimal closing_price;
+    private BigDecimal openPrice;
+    private BigDecimal lowPrice;
+    private BigDecimal highPrice;
+    private BigDecimal closingPrice;
     private Integer volume;
 
 
     public StockSummary() {
     }
 
-    public StockSummary(String symbol, BigDecimal open_price, BigDecimal low_price, BigDecimal high_price, BigDecimal closing_price, Integer volume) {
+    public StockSummary(String symbol, BigDecimal openPrice, BigDecimal lowPrice, BigDecimal highPrice, BigDecimal closingPrice, Integer volume) {
 
         this.symbol = symbol;
-        this.open_price = open_price;
-        this.low_price = low_price;
-        this.high_price = high_price;
-        this.closing_price = closing_price;
+        this.openPrice = openPrice;
+        this.lowPrice = lowPrice;
+        this.highPrice = highPrice;
+        this.closingPrice = closingPrice;
         this.volume = volume;
 
     }
@@ -34,36 +34,36 @@ public class StockSummary {
         this.symbol = symbol;
     }
 
-    public BigDecimal getOpen_price() {
-        return open_price;
+    public BigDecimal getOpenPrice() {
+        return openPrice;
     }
 
-    public void setOpen_price(BigDecimal open_price) {
-        this.open_price = open_price;
+    public void setOpenPrice(BigDecimal openPrice) {
+        this.openPrice = openPrice;
     }
 
-    public BigDecimal getLow_price() {
-        return low_price;
+    public BigDecimal getLowPrice() {
+        return lowPrice;
     }
 
-    public void setLow_price(BigDecimal low_price) {
-        this.low_price = low_price;
+    public void setLowPrice(BigDecimal lowPrice) {
+        this.lowPrice = lowPrice;
     }
 
-    public BigDecimal getHigh_price() {
-        return high_price;
+    public BigDecimal getHighPrice() {
+        return highPrice;
     }
 
-    public void setHigh_price(BigDecimal high_price) {
-        this.high_price = high_price;
+    public void setHighPrice(BigDecimal highPrice) {
+        this.highPrice = highPrice;
     }
 
-    public BigDecimal getClosing_price() {
-        return closing_price;
+    public BigDecimal getClosingPrice() {
+        return closingPrice;
     }
 
-    public void setClosing_price(BigDecimal closing_price) {
-        this.closing_price = closing_price;
+    public void setClosingPrice(BigDecimal closingPrice) {
+        this.closingPrice = closingPrice;
     }
 
     public Integer getVolume() {
