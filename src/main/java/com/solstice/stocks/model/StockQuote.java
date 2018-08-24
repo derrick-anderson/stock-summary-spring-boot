@@ -1,5 +1,7 @@
 package com.solstice.stocks.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -18,6 +20,7 @@ public class StockQuote {
     private String symbol;
     private BigDecimal price;
     private int volume;
+    @JsonFormat( shape= JsonFormat.Shape.STRING, pattern = "dd-MM-YYYY hh:mm:ss")
     private Date date;
     private int year;
     private int month;
