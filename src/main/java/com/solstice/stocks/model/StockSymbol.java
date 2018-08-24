@@ -15,17 +15,17 @@ public class StockSymbol {
 
     private String symbol;
 
-    @OneToMany()
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @JoinColumn(name = "stock_symbol_id")
-    private List<StockQuote> stockQuotes;
+//    @OneToMany()
+//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+//    @JoinColumn(name = "stock_symbol_id")
+//    private List<StockQuote> stockQuotes;
 
     public StockSymbol() {
     }
 
     public StockSymbol(String symbol, List<StockQuote> stockQuotes) {
         this.symbol = symbol;
-        this.stockQuotes = stockQuotes;
+//        this.stockQuotes = stockQuotes;
     }
 
     public Long getId() {
@@ -43,12 +43,12 @@ public class StockSymbol {
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
-
-    public List<StockQuote> getStockQuotes() {
-        return stockQuotes;
-    }
-
-    public void setStockQuotes(List<StockQuote> stockQuotes) {
-        this.stockQuotes = stockQuotes;
-    }
+//
+//    public List<StockQuote> getStockQuotes() {
+//        return stockQuotes;
+//    }
+//
+//    public void setStockQuotes(List<StockQuote> stockQuotes) {
+//        this.stockQuotes = stockQuotes;
+//    }
 }

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,6 @@ import static java.util.stream.Collectors.groupingBy;
 @PropertySource("classpath:application.properties")
 public class StockServices {
 
-    private StockSymbolRepository symbolRepository;
     private StockQuoteRepository stockQuoteRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -31,9 +32,15 @@ public class StockServices {
     private URL dataUrl;
 
 
-    public StockServices(StockSymbolRepository symbolRepository, StockQuoteRepository stockQuoteRepository) {
-        this.symbolRepository = symbolRepository;
+    public StockServices(StockQuoteRepository stockQuoteRepository) {
         this.stockQuoteRepository = stockQuoteRepository;
+    }
+
+
+    public void loadStocks() {
+
+        stockQuoteRepository.saveAll(getAllStocks());
+
     }
 
 
@@ -42,7 +49,8 @@ public class StockServices {
         List<StockQuote> stockList = null;
 
         try {
-
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss.SSS'+0000'");
+            mapper.setDateFormat(df);
             stockList = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
             });
 
@@ -55,31 +63,7 @@ public class StockServices {
     }
 
 
-    public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes) {
-
-        Set<StockSymbol> groupedSymbols = new HashSet<>();
-
-        Map<String, List<StockQuote>> allQuotesGrouped = allQuotes.stream().collect(groupingBy(StockQuote::getSymbol));
-
-        for (String symbol : allQuotesGrouped.keySet()) {
-
-            StockSymbol entry = new StockSymbol(symbol, allQuotesGrouped.get(symbol));
-            groupedSymbols.add(entry);
-
-        }
-
-        return groupedSymbols;
-    }
-
-
-    public void loadStocks() {
-
-        symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
-
-    }
-
-
-    private String getDateFormat(String dateIn) {
+    public String getDateFormat(String dateIn) {
         String[] dateParts = dateIn.split("-");
 
         String dateFormat = "%Y-%m";
