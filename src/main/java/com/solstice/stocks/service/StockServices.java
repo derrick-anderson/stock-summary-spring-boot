@@ -134,4 +134,9 @@ public class StockServices {
         return closePrice.isPresent()? closePrice.get().getPrice(): null;
 
     }
+
+
+    public String getIdFromSymbol(Long id){
+        return null;
+    }
 }
