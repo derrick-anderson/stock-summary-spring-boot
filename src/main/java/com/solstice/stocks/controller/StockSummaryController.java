@@ -1,6 +1,7 @@
 package com.solstice.stocks.controller;
 
 import com.solstice.stocks.model.StockSummary;
+import com.solstice.stocks.model.StockSymbol;
 import com.solstice.stocks.service.StockServices;
 import org.springframework.web.bind.annotation.*;
 

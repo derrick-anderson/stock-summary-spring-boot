@@ -9,6 +9,7 @@ import com.solstice.stocks.model.StockSymbol;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -22,11 +23,15 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:application.properties")
 public class StockServices {
 
+    private RestTemplate restTemplate = new RestTemplate();
     private StockQuoteRepository stockQuoteRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Value("${datasource.url}")
     private URL dataUrl;
+
+    @Value("${stockService.url}")
+    private URL stockServiceURL;
 
 
     public StockServices(StockQuoteRepository stockQuoteRepository) {
@@ -74,8 +79,9 @@ public class StockServices {
     public StockSummary getSummary(String symbol, String dateIn) {
 
         String dateFormat = getDateFormat(dateIn);
+        String symbolId = getIdFromSymbol(symbol).getId();
 
-        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbol, dateIn, dateFormat);
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbolId, dateIn, dateFormat);
 
         Integer totalVolume = getTotalVolume(quotes);
         BigDecimal openPrice = getOpeningPrice(quotes);
@@ -137,7 +143,10 @@ public class StockServices {
     }
 
 
-    public StockSymbol getIdFromSymbol(Long id){
-        return null;
+    public StockSymbol getIdFromSymbol(String symbol){
+
+        StockSymbol symbolResult = restTemplate.getForObject(stockServiceURL +"/ids/" + symbol, StockSymbol.class);
+        return symbolResult;
+
     }
 }

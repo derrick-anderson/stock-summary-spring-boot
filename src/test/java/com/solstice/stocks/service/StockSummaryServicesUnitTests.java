@@ -78,7 +78,7 @@ public class StockSummaryServicesUnitTests {
     );
 
 
-    private StockSymbol mockSymbol = new StockSymbol(Long.valueOf(1), "AAPL");
+    private StockSymbol mockSymbol = new StockSymbol(String.valueOf(1), "AAPL");
 
 
     @Before
