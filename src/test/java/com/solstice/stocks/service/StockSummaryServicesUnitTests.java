@@ -4,6 +4,7 @@ package com.solstice.stocks.service;
 import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
+import com.solstice.stocks.model.StockSymbol;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class StockSummaryServicesUnitTests {
 
     @Mock
     private StockQuoteRepository stockQuoteRepository;
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @InjectMocks
     private StockServices stockServices;
@@ -71,6 +76,9 @@ public class StockSummaryServicesUnitTests {
             new BigDecimal(85.75),
             525600
     );
+
+
+    private StockSymbol mockSymbol = new StockSymbol(Long.valueOf(1), "AAPL");
 
 
     @Before
@@ -167,6 +175,15 @@ public class StockSummaryServicesUnitTests {
     }
 
 
+    @Test
+    public void testGetIdFromSymbol(){
 
+        when(restTemplate.getForObject(any(), any())).thenReturn(mockSymbol);
+
+        StockSymbol aSymbol = stockServices.getIdFromSymbol(Long.valueOf("1"));
+
+        assertEquals(Long.valueOf("1"), aSymbol.getId());
+        assertEquals("AAPL", aSymbol.getSymbol());
+    }
 
 }
