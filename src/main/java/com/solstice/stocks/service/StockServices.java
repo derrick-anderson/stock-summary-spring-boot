@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
+import com.solstice.stocks.model.StockSymbol;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -136,7 +137,7 @@ public class StockServices {
     }
 
 
-    public String getIdFromSymbol(Long id){
+    public StockSymbol getIdFromSymbol(Long id){
         return null;
     }
 }
