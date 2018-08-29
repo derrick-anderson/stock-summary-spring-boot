@@ -6,12 +6,16 @@ import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
 import com.solstice.stocks.model.StockSymbol;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:application.properties")
 public class StockServices {
 
+    private DiscoveryClient discoveryClient;
     private RestTemplate restTemplate = new RestTemplate();
     private StockQuoteRepository stockQuoteRepository;
     private ObjectMapper mapper = new ObjectMapper();
@@ -34,8 +39,9 @@ public class StockServices {
     private URL stockServiceURL;
 
 
-    public StockServices(StockQuoteRepository stockQuoteRepository) {
+    public StockServices(StockQuoteRepository stockQuoteRepository, DiscoveryClient discoveryClient) {
         this.stockQuoteRepository = stockQuoteRepository;
+        this.discoveryClient = discoveryClient;
     }
 
 
@@ -61,7 +67,8 @@ public class StockServices {
             System.err.println(e.getMessage());
 
         }
-        return stockList;
+//        return stockList;
+        return new ArrayList<>(stockList.subList(0,1000));
     }
 
 
@@ -76,7 +83,7 @@ public class StockServices {
     }
 
 
-    public StockSummary getSummary(String symbol, String dateIn) {
+    public StockSummary getSummary(String symbol, String dateIn){
 
         String dateFormat = getDateFormat(dateIn);
         String symbolId = getIdFromSymbol(symbol).getId();
@@ -143,9 +150,17 @@ public class StockServices {
     }
 
 
-    public StockSymbol getIdFromSymbol(String symbol){
+    public StockSymbol getIdFromSymbol(String symbol) {
 
-        StockSymbol symbolResult = restTemplate.getForObject(stockServiceURL +"/ids/" + symbol, StockSymbol.class);
+        List<ServiceInstance> stockServiceInstances = discoveryClient.getInstances("STOCK-SYMBOL-SERVICE");
+        URL stockSymbolServiceURL;
+        try {
+            stockSymbolServiceURL = stockServiceInstances.get(0).getUri().toURL();
+        }
+        catch(MalformedURLException e){
+            stockSymbolServiceURL = stockServiceURL;
+        }
+        StockSymbol symbolResult = restTemplate.getForObject(stockSymbolServiceURL +"/ids/" + symbol, StockSymbol.class);
         return symbolResult;
 
     }

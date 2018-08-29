@@ -5,7 +5,7 @@ import com.solstice.stocks.model.StockSymbol;
 import com.solstice.stocks.service.StockServices;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/")
+@RestController
 public class StockSummaryController {
 
     private StockServices stockServices;
