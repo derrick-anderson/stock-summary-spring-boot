@@ -5,6 +5,8 @@ import com.solstice.stocks.model.StockSymbol;
 import com.solstice.stocks.service.StockServices;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
+
 @RestController
 public class StockSummaryController {
 
