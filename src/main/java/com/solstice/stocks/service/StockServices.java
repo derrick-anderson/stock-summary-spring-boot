@@ -2,99 +2,166 @@ package com.solstice.stocks.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solstice.stocks.data.StockSymbolRepository;
+import com.solstice.stocks.data.StockQuoteRepository;
 import com.solstice.stocks.model.StockQuote;
 import com.solstice.stocks.model.StockSummary;
 import com.solstice.stocks.model.StockSymbol;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static java.util.stream.Collectors.groupingBy;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Component
 @PropertySource("classpath:application.properties")
 public class StockServices {
 
-    private StockSymbolRepository symbolRepository;
+    private DiscoveryClient discoveryClient;
+    private RestTemplate restTemplate = new RestTemplate();
+    private StockQuoteRepository stockQuoteRepository;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Value("${datasource.url}")
     private URL dataUrl;
 
-    public StockServices(StockSymbolRepository repository) {
+    @Value("${stockService.url}")
+    private URL stockServiceURL;
 
-        this.symbolRepository = repository;
+
+    public StockServices(StockQuoteRepository stockQuoteRepository, DiscoveryClient discoveryClient) {
+        this.stockQuoteRepository = stockQuoteRepository;
+        this.discoveryClient = discoveryClient;
+    }
+
+
+    public void loadStocks() {
+
+        stockQuoteRepository.saveAll(getAllStocks());
 
     }
 
-    public List<StockQuote> getAllStocks(){
 
-        List<StockQuote> stock_list = null;
+    public List<StockQuote> getAllStocks() {
+
+        List<StockQuote> stockList = null;
 
         try {
-
-            stock_list = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
+            DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss.SSS'+0000'");
+            mapper.setDateFormat(df);
+            stockList = mapper.readValue(dataUrl, new TypeReference<List<StockQuote>>() {
             });
 
-        }
-        catch( Exception e ){
+        } catch (Exception e) {
 
             System.err.println(e.getMessage());
 
         }
-        return stock_list;
+//        return stockList;
+        return new ArrayList<>(stockList.subList(0,1000));
     }
 
 
-    public Set<StockSymbol> getGroupedSymbols(List<StockQuote> allQuotes){
+    public String getDateFormat(String dateIn) {
+        String[] dateParts = dateIn.split("-");
 
-        Set<StockSymbol> groupedSymbols = new HashSet<>();
-
-        Map<String, List<StockQuote> > allQuotesGrouped = allQuotes.stream().collect(groupingBy(StockQuote::getSymbol));
-
-        for( String symbol : allQuotesGrouped.keySet()){
-
-            StockSymbol entry = new StockSymbol(symbol, allQuotesGrouped.get(symbol));
-            groupedSymbols.add(entry);
-
+        String dateFormat = "%Y-%m";
+        if (dateParts.length == 3) {
+            dateFormat = "%Y-%m-%d";
         }
-
-        return groupedSymbols;
+        return dateFormat;
     }
 
-    public void loadStocks(){
 
-        symbolRepository.saveAll(getGroupedSymbols(getAllStocks()));
+    public StockSummary getSummary(String symbol, String dateIn){
+
+        String dateFormat = getDateFormat(dateIn);
+        String symbolId = getIdFromSymbol(symbol).getId();
+
+        List<StockQuote> quotes = stockQuoteRepository.getAllQuotesForDate(symbolId, dateIn, dateFormat);
+
+        Integer totalVolume = getTotalVolume(quotes);
+        BigDecimal openPrice = getOpeningPrice(quotes);
+        BigDecimal highPrice = getHighPrice(quotes);
+        BigDecimal lowPrice = getLowPrice(quotes);
+        BigDecimal closePrice = getClosingPrice(quotes);
+
+        StockSummary summary = new StockSummary(symbol, openPrice, lowPrice, highPrice, closePrice, totalVolume);
+
+        return summary;
 
     }
 
-    public StockSummary getSummary(String stock_in, String date_in){
 
-        String[] dateSet = date_in.split("-");
+    public Integer getTotalVolume(List<StockQuote> quotes){
 
-        if(dateSet.length == 3) {
+        Integer totalVolume = quotes.stream()
+                .collect(Collectors.summingInt(StockQuote::getVolume));
 
-            int year_in = Integer.valueOf(dateSet[0]);
-            int month_in = Integer.valueOf(dateSet[1]);
-            int day_in = Integer.valueOf(dateSet[2]);
-            return symbolRepository.dailySummaryQuery(stock_in.toUpperCase(), year_in, month_in, day_in);
+        return totalVolume;
+    }
 
+
+    public BigDecimal getHighPrice(List<StockQuote> quotes){
+
+        Optional<StockQuote> highQuote = quotes.stream()
+                .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getPrice)));
+
+        return highQuote.isPresent()? highQuote.get().getPrice(): null;
+    }
+
+
+    public BigDecimal getLowPrice(List<StockQuote> quotes){
+
+        Optional<StockQuote> lowQuote = quotes.stream()
+                .collect(Collectors.minBy(Comparator.comparing(StockQuote::getPrice)));
+
+        return lowQuote.isPresent()? lowQuote.get().getPrice(): null;
+    }
+
+
+    public BigDecimal getOpeningPrice(List<StockQuote> quotes){
+
+        Optional<StockQuote> openQuote = quotes.stream()
+                .collect(Collectors.minBy(Comparator.comparing(StockQuote::getDate)));
+
+        return openQuote.isPresent()? openQuote.get().getPrice(): null;
+
+    }
+
+
+    public BigDecimal getClosingPrice(List<StockQuote> quotes){
+
+        Optional<StockQuote> closePrice = quotes.stream()
+                .collect(Collectors.maxBy(Comparator.comparing(StockQuote::getDate)));
+
+        return closePrice.isPresent()? closePrice.get().getPrice(): null;
+
+    }
+
+
+    public StockSymbol getIdFromSymbol(String symbol) {
+
+        List<ServiceInstance> stockServiceInstances = discoveryClient.getInstances("STOCK-SYMBOL-SERVICE");
+        URL stockSymbolServiceURL;
+        try {
+            stockSymbolServiceURL = stockServiceInstances.get(0).getUri().toURL();
         }
-        else if( dateSet.length == 2){
-
-            int year_in = Integer.valueOf(dateSet[0]);
-            int month_in = Integer.valueOf(dateSet[1]);
-            return symbolRepository.monthlySummaryQuery(stock_in.toUpperCase(), year_in, month_in);
+        catch(MalformedURLException e){
+            stockSymbolServiceURL = stockServiceURL;
         }
-        else return new StockSummary();
-    }
+        StockSymbol symbolResult = restTemplate.getForObject(stockSymbolServiceURL +"/ids/" + symbol, StockSymbol.class);
+        return symbolResult;
 
+    }
 }

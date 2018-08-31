@@ -23,14 +23,31 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    springCloudServicesVersion = '2.0.1.RELEASE'
+    springCloudVersion = 'Finchley.RELEASE'
+}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    compile('com.fasterxml.jackson.core:jackson-databind:2.9.6')
+    compile('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
+
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')
+    runtime('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile group: 'com.github.springtestdbunit', name: 'spring-test-dbunit', version: '1.2.0'
+    testCompile group: 'org.dbunit', name: 'dbunit', version: '2.5.0'
 }
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
+    }
+}
+

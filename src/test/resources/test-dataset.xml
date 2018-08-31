@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataset>
+    <stock_quotes id="1" symbol="1" price="1500.00" volume="180000" date="2018-06-22 12:00:00.000" />
+    <stock_quotes id="2" symbol="1" price="1200.00" volume="150000" date="2018-06-22 12:00:00.000" />
+    <stock_quotes id="3" symbol="1" price="100.00" volume="100000" date="2018-06-22 00:00:00.000" />
+    <stock_quotes id="4" symbol="1" price="85.75" volume="130000" date="2018-06-22 23:30:00.000" />
+    <stock_quotes id="5" symbol="2" price="85.75" volume="130000" date="2018-06-22 23:30:00.000" />
+    <stock_quotes id="6" symbol="2" price="85.75" volume="130000" date="2018-06-22 23:30:00.000" />
+</dataset>
